@@ -1,5 +1,5 @@
 import React from 'react'
-import Favorite from './components/Favorite/Favorite'
+import FavoritePage from './components/Favorite/FavoritePage'
 import MainPage from './components/Main/MainPage'
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
@@ -42,7 +42,7 @@ function NavigationBar() {
                     <MainPage />
                 </Grid>
                 <Grid item className={classes.item}>
-                    <Favorite />
+                    <FavoritePage />
                 </Grid>
             </Grid>
         </Grid>

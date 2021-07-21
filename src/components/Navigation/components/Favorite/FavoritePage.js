@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import { Typography, Grid } from "@material-ui/core";
-function Favorite() {
+function FavoritePage() {
     return (
         <Link to="/favorite" style={{ textDecoration: "none" }}>
             <Grid item>
@@ -13,4 +13,4 @@ function Favorite() {
     )
 }
 
-export default Favorite
+export default FavoritePage

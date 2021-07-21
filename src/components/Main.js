@@ -3,9 +3,12 @@ import React from 'react'
 import SearchBar from './SearchBar/SearchBar'
 
 function Main() {
+
     return (
-        <Grid container>
-            <SearchBar />
+        <Grid container style={{ justifyContent: "center" }}>
+            <Grid item>
+                <SearchBar />
+            </Grid>
         </Grid>
     )
 }

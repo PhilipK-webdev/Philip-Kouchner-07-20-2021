@@ -4,7 +4,7 @@ import FieldSearch from './components/Field/FieldSearch'
 
 function SearchBar() {
     return (
-        <Grid container style={{ justifyContent: "center" }}>
+        <Grid container >
             <Grid item>
                 <FieldSearch />
             </Grid>
