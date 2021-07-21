@@ -5,10 +5,11 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import ButtonSearch from '../Button/ButtonSearch';
 import { Grid } from '@material-ui/core';
 import axios from "axios";
+import CurrentWeather from '../CurrentWeather/CurrentWeather';
 
 function FieldSearch() {
 
-    let urlICon = "https://developer.accuweather.com/sites/default/files/34-s.png";
+    let urlICon = "https://developer.accuweather.com/sites/default/files/01-s.png";
     let mockArrayAutocomplete = [
         {
             "Version": 1,
@@ -387,84 +388,97 @@ function FieldSearch() {
 
     const [arrayCity, setArrayCity] = useState([]);
     const [searchCity, setSearchCity] = useState("");
-
-
+    const [keySearch, setKeySearch] = useState();
+    const [objCurrentWeather, setObjCurrentWeather] = useState(["Tel Aviv", "https://developer.accuweather.com/sites/default/files/01-s.png", "30.4 C"]);
 
 
     const onKeyPress = (e) => {
         setSearchCity(e.target.value);
         const userChoice = e.target.value;
         if (userChoice.length > 1) {
-            // userGetCity(userChoice).then(data => {
+            // userGetCity(userChoice).then(res => {
             //     let arrayCity = [];
-            //     arrayCity = [...data.LocalizedName];
+            //     setKeySearch(res.data[0].Key);
+            //     const convert = convertObjCityToArr(res);
+            //     arrayCity = [...convert];
             //     setArrayCity([...arrayCity]);
             // }).catch(err => console.log(err));
-            const convertObj = userGetCity(userChoice);
-            // let arrayCity = [];
-            // arrayCity = [...convertObj];
-            // setArrayCity([...arrayCity]);
         }
     };
     const userGetCity = async (userChoice) => {
-        // const url = `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${getApiKey.privateMethodEncapsulated()}&q=${userChoice}`;
-        // const response = await axios(url);
-        // const { data } = await response;
-        // return data;
-        // let keySearch = mockArrayAutocomplete[0][0].Key;
-        // getCurrentWeather(keySearch);
-        // getForecast(keySearch);
-        // console.log(mockArrayAutocomplete);
-        let result;
-        console.log(mockArrayAutocomplete.length);
-        for (let i = 0; i < mockArrayAutocomplete.length; i++) {
-            result = (Object.values(mockArrayAutocomplete[i]));
+        const url = `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${getApiKey.privateMethodEncapsulated()}&q=${userChoice}`;
+        const response = await axios(url);
+        return response;
+    }
+    const convertObjCityToArr = (data) => {
+        let result = [];
+        let tempArrOfNameCity = [];
+        for (let i = 0; i < data.data.length; i++) {
+            result[i] = (Object.values(data.data[i]));
         }
-        console.log(result);
-        // const arrayCities = result.filter(city)
+        for (let i = 0; i < result.length; i++) {
+            tempArrOfNameCity[i] = result[i][4];
+        }
+        return tempArrOfNameCity;
+    }
+    const getCurrentWeather = async (keySearch) => {
+        const url = `http://dataservice.accuweather.com/currentconditions/v1/${keySearch}?apikey=${getApiKey.privateMethodEncapsulated()}`;
+        const responseCurrentWeather = await axios(url);
+        return responseCurrentWeather;
     }
 
-    const getCurrentWeather = (keySearch) => {
-        // const url = `http://dataservice.accuweather.com/currentconditions/v1/${keySearch}?apikey=${getApiKey.privateMethodEncapsulated()}`
-        console.log(currentWeather);
-
-    }
-
-    const getForecast = (keySearch) => {
-        // const url=`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${keySearch}?apikey=${getApiKey.privateMethodEncapsulated()}`;
-        console.log(forecastWeather.DailyForecasts);
+    const getForecast = async (keySearch) => {
+        const url = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${keySearch}?apikey=${getApiKey.privateMethodEncapsulated()}`;
+        const responseForecast = await axios(url);
+        return responseForecast;
     }
     const submit = (e) => {
         e.preventDefault();
+        // const currentWeather = getCurrentWeather(keySearch);
+        // const forecast = getForecast(keySearch);
+        // currentWeather.then(res => console.log(res)).catch(err => console.log(err));
+        // forecast.then(res => console.log(res)).catch(err => console.log(err));
+        let temp = [];
+        temp.push(currentWeather[0].WeatherText);
+        let urlIcon = `https://developer.accuweather.com/sites/default/files/${currentWeather[0].WeatherIcon}-s.png`
+        temp.push(urlIcon);
+        temp.push(currentWeather[0].Temperature.Metric.Value + currentWeather[0].Temperature.Metric.Unit);
+        setObjCurrentWeather([...temp]);
+
+
+
+
+
         if (searchCity !== "") {
             setSearchCity("");
         }
-        // else {
-        //   setFlag(true);
-        //   setStatusBase({ msg: "Error - Invalid Input", key: Math.random() });
-        // }
     };
     const onSave = (event, newValue) => {
         setSearchCity(newValue);
     };
     return (
-        <Grid container>
-            <Grid item >
-                <FormControl variant="outlined" style={{ marginRight: "50px" }}>
-                    <Autocomplete
-                        options={arrayCity}
-                        id="controlled-demo"
-                        value={searchCity}
-                        getOptionLabel={(option) => option}
-                        onKeyUp={onKeyPress}
-                        onChange={onSave}
-                        renderInput={(params) => <TextField {...params} margin="normal" variant="outlined" />}
-                        style={{ marginBottom: "25px", width: "500px" }}
-                    />
-                </FormControl>
+        <Grid>
+            <Grid container>
+                <Grid item >
+                    <FormControl variant="outlined" style={{ marginRight: "50px" }}>
+                        <Autocomplete
+                            options={arrayCity}
+                            id="controlled-demo"
+                            value={searchCity}
+                            getOptionLabel={(option) => option}
+                            onKeyUp={onKeyPress}
+                            onChange={onSave}
+                            renderInput={(params) => <TextField {...params} margin="normal" variant="outlined" />}
+                            style={{ marginBottom: "25px", width: "500px" }}
+                        />
+                    </FormControl>
+                </Grid>
+                <Grid item style={{ marginTop: "25px" }}>
+                    <ButtonSearch submit={submit} />
+                </Grid>
             </Grid>
-            <Grid item style={{ marginTop: "25px" }}>
-                <ButtonSearch submit={submit} />
+            <Grid container>
+                <CurrentWeather objCurrentWeather={objCurrentWeather} />
             </Grid>
         </Grid>
     )
