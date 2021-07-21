@@ -9,7 +9,7 @@ import axios from "axios";
 function FieldSearch() {
 
     let urlICon = "https://developer.accuweather.com/sites/default/files/34-s.png";
-    let mockArrayAutocomplete = [[
+    let mockArrayAutocomplete = [
         {
             "Version": 1,
             "Key": "234000",
@@ -160,7 +160,7 @@ function FieldSearch() {
                 "LocalizedName": "Quezon"
             }
         }
-    ]];
+    ];
 
 
     let currentWeather = [{
@@ -395,22 +395,33 @@ function FieldSearch() {
         setSearchCity(e.target.value);
         const userChoice = e.target.value;
         if (userChoice.length > 1) {
-            userGetCity(userChoice).then(data => {
-                let arrayCity = [];
-                arrayCity = [...data.LocalizedName];
-                setArrayCity([...arrayCity]);
-            }).catch(err => console.log(err));
-            // userGetCity(userChoice);
+            // userGetCity(userChoice).then(data => {
+            //     let arrayCity = [];
+            //     arrayCity = [...data.LocalizedName];
+            //     setArrayCity([...arrayCity]);
+            // }).catch(err => console.log(err));
+            const convertObj = userGetCity(userChoice);
+            // let arrayCity = [];
+            // arrayCity = [...convertObj];
+            // setArrayCity([...arrayCity]);
         }
     };
     const userGetCity = async (userChoice) => {
-        const url = `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${getApiKey.privateMethodEncapsulated()}&q=${userChoice}`;
-        const response = await axios(url);
-        const { data } = await response;
-        return data;
+        // const url = `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${getApiKey.privateMethodEncapsulated()}&q=${userChoice}`;
+        // const response = await axios(url);
+        // const { data } = await response;
+        // return data;
         // let keySearch = mockArrayAutocomplete[0][0].Key;
         // getCurrentWeather(keySearch);
         // getForecast(keySearch);
+        // console.log(mockArrayAutocomplete);
+        let result;
+        console.log(mockArrayAutocomplete.length);
+        for (let i = 0; i < mockArrayAutocomplete.length; i++) {
+            result = (Object.values(mockArrayAutocomplete[i]));
+        }
+        console.log(result);
+        // const arrayCities = result.filter(city)
     }
 
     const getCurrentWeather = (keySearch) => {
