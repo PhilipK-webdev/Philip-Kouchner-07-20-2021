@@ -1,382 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ButtonSearch from '../Button/ButtonSearch';
 import { Grid } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from "axios";
+import moment from 'moment';
 import CurrentWeather from '../CurrentWeather/CurrentWeather';
+import Forecast from '../Forecast/Forecast';
+import * as actions from '../../../../redux/actions';
 
 function FieldSearch() {
-
-    let urlICon = "https://developer.accuweather.com/sites/default/files/01-s.png";
-    let mockArrayAutocomplete = [
-        {
-            "Version": 1,
-            "Key": "234000",
-            "Type": "City",
-            "Rank": 35,
-            "LocalizedName": "San Francisco Coacalco",
-            "Country": {
-                "ID": "MX",
-                "LocalizedName": "Mexico"
-            },
-            "AdministrativeArea": {
-                "ID": "MEX",
-                "LocalizedName": "México"
-            }
-        },
-        {
-            "Version": 1,
-            "Key": "347629",
-            "Type": "City",
-            "Rank": 35,
-            "LocalizedName": "San Francisco",
-            "Country": {
-                "ID": "US",
-                "LocalizedName": "United States"
-            },
-            "AdministrativeArea": {
-                "ID": "CA",
-                "LocalizedName": "California"
-            }
-        },
-        {
-            "Version": 1,
-            "Key": "122459",
-            "Type": "City",
-            "Rank": 41,
-            "LocalizedName": "San Francisco De Macoris",
-            "Country": {
-                "ID": "DO",
-                "LocalizedName": "Dominican Republic"
-            },
-            "AdministrativeArea": {
-                "ID": "06",
-                "LocalizedName": "Duarte"
-            }
-        },
-        {
-            "Version": 1,
-            "Key": "7621",
-            "Type": "City",
-            "Rank": 45,
-            "LocalizedName": "San Francisco Solano",
-            "Country": {
-                "ID": "AR",
-                "LocalizedName": "Argentina"
-            },
-            "AdministrativeArea": {
-                "ID": "B",
-                "LocalizedName": "Buenos Aires"
-            }
-        },
-        {
-            "Version": 1,
-            "Key": "3564395",
-            "Type": "City",
-            "Rank": 45,
-            "LocalizedName": "San Francisco de Campeche",
-            "Country": {
-                "ID": "MX",
-                "LocalizedName": "Mexico"
-            },
-            "AdministrativeArea": {
-                "ID": "CAM",
-                "LocalizedName": "Campeche"
-            }
-        },
-        {
-            "Version": 1,
-            "Key": "232898",
-            "Type": "City",
-            "Rank": 45,
-            "LocalizedName": "San Francisco del Rincón",
-            "Country": {
-                "ID": "MX",
-                "LocalizedName": "Mexico"
-            },
-            "AdministrativeArea": {
-                "ID": "GUA",
-                "LocalizedName": "Guanajuato"
-            }
-        },
-        {
-            "Version": 1,
-            "Key": "3172",
-            "Type": "City",
-            "Rank": 55,
-            "LocalizedName": "San Francisco",
-            "Country": {
-                "ID": "AR",
-                "LocalizedName": "Argentina"
-            },
-            "AdministrativeArea": {
-                "ID": "X",
-                "LocalizedName": "Cordoba"
-            }
-        },
-        {
-            "Version": 1,
-            "Key": "113032",
-            "Type": "City",
-            "Rank": 55,
-            "LocalizedName": "San Francisco",
-            "Country": {
-                "ID": "CR",
-                "LocalizedName": "Costa Rica"
-            },
-            "AdministrativeArea": {
-                "ID": "H",
-                "LocalizedName": "Heredia"
-            }
-        },
-        {
-            "Version": 1,
-            "Key": "262723",
-            "Type": "City",
-            "Rank": 55,
-            "LocalizedName": "San Francisco",
-            "Country": {
-                "ID": "PH",
-                "LocalizedName": "Philippines"
-            },
-            "AdministrativeArea": {
-                "ID": "CEB",
-                "LocalizedName": "Cebu"
-            }
-        },
-        {
-            "Version": 1,
-            "Key": "265727",
-            "Type": "City",
-            "Rank": 55,
-            "LocalizedName": "San Francisco",
-            "Country": {
-                "ID": "PH",
-                "LocalizedName": "Philippines"
-            },
-            "AdministrativeArea": {
-                "ID": "QUE",
-                "LocalizedName": "Quezon"
-            }
-        }
-    ];
-
-
-    let currentWeather = [{
-        "LocalObservationDateTime": "2021-07-21T02:10:00-05:00",
-        "EpochTime": 1626851400,
-        "WeatherText": "A shower",
-        "WeatherIcon": 12,
-        "HasPrecipitation": true,
-        "PrecipitationType": "Rain",
-        "IsDayTime": false,
-        "Temperature": {
-            "Metric": {
-                "Value": 15.1,
-                "Unit": "C",
-                "UnitType": 17
-            },
-            "Imperial": {
-                "Value": 59,
-                "Unit": "F",
-                "UnitType": 18
-            }
-        },
-        "MobileLink": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/current-weather/234000?lang=en-us",
-        "Link": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/current-weather/234000?lang=en-us"
-    }];
-
-    let forecastWeather = {
-        "Headline": {
-            "EffectiveDate": "2021-07-25T08:00:00-05:00",
-            "EffectiveEpochDate": 1627218000,
-            "Severity": 4,
-            "Text": "Pleasant Sunday",
-            "Category": "mild",
-            "EndDate": null,
-            "EndEpochDate": null,
-            "MobileLink": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/extended-weather-forecast/234000?lang=en-us",
-            "Link": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?lang=en-us"
-        },
-        "DailyForecasts": [
-            {
-                "Date": "2021-07-20T07:00:00-05:00",
-                "EpochDate": 1626782400,
-                "Temperature": {
-                    "Minimum": {
-                        "Value": 57,
-                        "Unit": "F",
-                        "UnitType": 18
-                    },
-                    "Maximum": {
-                        "Value": 76,
-                        "Unit": "F",
-                        "UnitType": 18
-                    }
-                },
-                "Day": {
-                    "Icon": 17,
-                    "IconPhrase": "Partly sunny w/ t-storms",
-                    "HasPrecipitation": true,
-                    "PrecipitationType": "Rain",
-                    "PrecipitationIntensity": "Light"
-                },
-                "Night": {
-                    "Icon": 40,
-                    "IconPhrase": "Mostly cloudy w/ showers",
-                    "HasPrecipitation": true,
-                    "PrecipitationType": "Rain",
-                    "PrecipitationIntensity": "Moderate"
-                },
-                "Sources": [
-                    "AccuWeather"
-                ],
-                "MobileLink": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?lang=en-us",
-                "Link": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?lang=en-us"
-            },
-            {
-                "Date": "2021-07-21T07:00:00-05:00",
-                "EpochDate": 1626868800,
-                "Temperature": {
-                    "Minimum": {
-                        "Value": 57,
-                        "Unit": "F",
-                        "UnitType": 18
-                    },
-                    "Maximum": {
-                        "Value": 73,
-                        "Unit": "F",
-                        "UnitType": 18
-                    }
-                },
-                "Day": {
-                    "Icon": 17,
-                    "IconPhrase": "Partly sunny w/ t-storms",
-                    "HasPrecipitation": true,
-                    "PrecipitationType": "Rain",
-                    "PrecipitationIntensity": "Moderate"
-                },
-                "Night": {
-                    "Icon": 42,
-                    "IconPhrase": "Mostly cloudy w/ t-storms",
-                    "HasPrecipitation": true,
-                    "PrecipitationType": "Rain",
-                    "PrecipitationIntensity": "Moderate"
-                },
-                "Sources": [
-                    "AccuWeather"
-                ],
-                "MobileLink": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=1&lang=en-us",
-                "Link": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=1&lang=en-us"
-            },
-            {
-                "Date": "2021-07-22T07:00:00-05:00",
-                "EpochDate": 1626955200,
-                "Temperature": {
-                    "Minimum": {
-                        "Value": 57,
-                        "Unit": "F",
-                        "UnitType": 18
-                    },
-                    "Maximum": {
-                        "Value": 73,
-                        "Unit": "F",
-                        "UnitType": 18
-                    }
-                },
-                "Day": {
-                    "Icon": 17,
-                    "IconPhrase": "Partly sunny w/ t-storms",
-                    "HasPrecipitation": true,
-                    "PrecipitationType": "Rain",
-                    "PrecipitationIntensity": "Moderate"
-                },
-                "Night": {
-                    "Icon": 12,
-                    "IconPhrase": "Showers",
-                    "HasPrecipitation": true,
-                    "PrecipitationType": "Rain",
-                    "PrecipitationIntensity": "Moderate"
-                },
-                "Sources": [
-                    "AccuWeather"
-                ],
-                "MobileLink": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=2&lang=en-us",
-                "Link": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=2&lang=en-us"
-            },
-            {
-                "Date": "2021-07-23T07:00:00-05:00",
-                "EpochDate": 1627041600,
-                "Temperature": {
-                    "Minimum": {
-                        "Value": 54,
-                        "Unit": "F",
-                        "UnitType": 18
-                    },
-                    "Maximum": {
-                        "Value": 73,
-                        "Unit": "F",
-                        "UnitType": 18
-                    }
-                },
-                "Day": {
-                    "Icon": 17,
-                    "IconPhrase": "Partly sunny w/ t-storms",
-                    "HasPrecipitation": true,
-                    "PrecipitationType": "Rain",
-                    "PrecipitationIntensity": "Light"
-                },
-                "Night": {
-                    "Icon": 12,
-                    "IconPhrase": "Showers",
-                    "HasPrecipitation": true,
-                    "PrecipitationType": "Rain",
-                    "PrecipitationIntensity": "Light"
-                },
-                "Sources": [
-                    "AccuWeather"
-                ],
-                "MobileLink": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=3&lang=en-us",
-                "Link": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=3&lang=en-us"
-            },
-            {
-                "Date": "2021-07-24T07:00:00-05:00",
-                "EpochDate": 1627128000,
-                "Temperature": {
-                    "Minimum": {
-                        "Value": 53,
-                        "Unit": "F",
-                        "UnitType": 18
-                    },
-                    "Maximum": {
-                        "Value": 76,
-                        "Unit": "F",
-                        "UnitType": 18
-                    }
-                },
-                "Day": {
-                    "Icon": 4,
-                    "IconPhrase": "Intermittent clouds",
-                    "HasPrecipitation": true,
-                    "PrecipitationType": "Rain",
-                    "PrecipitationIntensity": "Light"
-                },
-                "Night": {
-                    "Icon": 34,
-                    "IconPhrase": "Mostly clear",
-                    "HasPrecipitation": false
-                },
-                "Sources": [
-                    "AccuWeather"
-                ],
-                "MobileLink": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=4&lang=en-us",
-                "Link": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=4&lang=en-us"
-            }
-        ]
-    }
+    const dispatch = useDispatch();
     let apiKey = "";
+    let keySearchTemp = "";
     const getApiKey = (function () {
         return {
             privateMethodEncapsulated: function () {
@@ -386,23 +24,76 @@ function FieldSearch() {
         }
     })();
 
+    const getKeySearch = (function () {
+        return {
+            privateMethodEncapsulated: function () {
+                keySearchTemp = "215854";
+                return keySearchTemp;
+            }
+        }
+    })();
+
     const [arrayCity, setArrayCity] = useState([]);
     const [searchCity, setSearchCity] = useState("");
     const [keySearch, setKeySearch] = useState();
-    const [objCurrentWeather, setObjCurrentWeather] = useState(["Tel Aviv", "https://developer.accuweather.com/sites/default/files/01-s.png", "30.4 C"]);
+    const objCurrentWeatherRedux = useSelector(state => {
+        console.log('state ? ', state);
+        return state.root.currentWeather;
+    })
+    const [renderForecast, setRenderForecast] = useState();
+
+    useEffect(() => {
+        defaultCity();
+    }, [])
+
+    const defaultCity = () => {
+
+        let tempURLToGetCurrentWeather = `http://dataservice.accuweather.com/currentconditions/v1/${getKeySearch.privateMethodEncapsulated()}?apikey=${getApiKey.privateMethodEncapsulated()}`;
+        let tempURLToGetForesast = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${getKeySearch.privateMethodEncapsulated()}?apikey=${getApiKey.privateMethodEncapsulated()}`;
+        const requestCurrent = axios.get(tempURLToGetCurrentWeather);
+        const requestForecast = axios.get(tempURLToGetForesast);
+        axios.all([requestCurrent, requestForecast]).then(axios.spread((...response) => {
+
+            const resultOne = response[0];
+            const resultTwo = response[1];
+            if (resultOne.data[0].WeatherIcon < 10) {
+                resultOne.data[0].WeatherIcon = `0${resultOne.data[0].WeatherIcon}`;
+            }
+            let urlIcon = `https://developer.accuweather.com/sites/default/files/${resultOne.data[0].WeatherIcon}-s.png`;
+            let temp = [];
+            temp.push(resultOne.data[0].WeatherText);
+            temp.push(urlIcon);
+            temp.push(resultOne.data[0].Temperature.Metric.Value + resultOne.data[0].Temperature.Metric.Unit);
+            dispatch(actions.setCurrentWeather([...temp]));
+            const result = resultTwo.data.DailyForecasts.map((data) => {
+                return {
+                    date: moment.utc(data.Date).format('MMMM Do YYYY, h:mm:ss a'),
+                    temptureMin: data.Temperature.Minimum.Value + data.Temperature.Minimum.Unit,
+                    temptureMin: data.Temperature.Maximum.Value + " " + data.Temperature.Maximum.Unit,
+                    IconPhrase: data.Night.IconPhrase
+
+                };
+            });
+            let newArrayForecast = [];
+            for (let i = 0; i < 5; i++) {
+                newArrayForecast[i] = (Object.values(result[i]));
+            }
+            setRenderForecast(newArrayForecast);
+        })).catch(err => console.log(err));
 
 
+    }
     const onKeyPress = (e) => {
         setSearchCity(e.target.value);
         const userChoice = e.target.value;
         if (userChoice.length > 1) {
-            // userGetCity(userChoice).then(res => {
-            //     let arrayCity = [];
-            //     setKeySearch(res.data[0].Key);
-            //     const convert = convertObjCityToArr(res);
-            //     arrayCity = [...convert];
-            //     setArrayCity([...arrayCity]);
-            // }).catch(err => console.log(err));
+            userGetCity(userChoice).then(res => {
+                let arrayCity = [];
+                setKeySearch(res.data[0].Key);
+                const convert = convertObjCityToArr(res);
+                arrayCity = [...convert];
+                setArrayCity([...arrayCity]);
+            }).catch(err => console.log(err));
         }
     };
     const userGetCity = async (userChoice) => {
@@ -438,12 +129,7 @@ function FieldSearch() {
         // const forecast = getForecast(keySearch);
         // currentWeather.then(res => console.log(res)).catch(err => console.log(err));
         // forecast.then(res => console.log(res)).catch(err => console.log(err));
-        let temp = [];
-        temp.push(currentWeather[0].WeatherText);
-        let urlIcon = `https://developer.accuweather.com/sites/default/files/${currentWeather[0].WeatherIcon}-s.png`
-        temp.push(urlIcon);
-        temp.push(currentWeather[0].Temperature.Metric.Value + currentWeather[0].Temperature.Metric.Unit);
-        setObjCurrentWeather([...temp]);
+
 
 
 
@@ -457,10 +143,10 @@ function FieldSearch() {
         setSearchCity(newValue);
     };
     return (
-        <Grid>
-            <Grid container>
-                <Grid item >
-                    <FormControl variant="outlined" style={{ marginRight: "50px" }}>
+        <Grid container xs={12}>
+            <Grid container xs={12} >
+                <Grid container xs={12} sm={10}>
+                    <FormControl variant="outlined" style={{ width: "90%" }}>
                         <Autocomplete
                             options={arrayCity}
                             id="controlled-demo"
@@ -469,19 +155,328 @@ function FieldSearch() {
                             onKeyUp={onKeyPress}
                             onChange={onSave}
                             renderInput={(params) => <TextField {...params} margin="normal" variant="outlined" />}
-                            style={{ marginBottom: "25px", width: "500px" }}
+                            style={{ marginBottom: "25px" }}
                         />
                     </FormControl>
                 </Grid>
-                <Grid item style={{ marginTop: "25px" }}>
+                <Grid item style={{ marginTop: "17px" }} xs={12} sm={2}>
                     <ButtonSearch submit={submit} />
                 </Grid>
             </Grid>
-            <Grid container>
-                <CurrentWeather objCurrentWeather={objCurrentWeather} />
+            <Grid container xs={12} style={{ marginTop: "5%" }}>
+                <Grid item sx={12} sm={12}>
+                    <CurrentWeather objCurrentWeather={objCurrentWeatherRedux} />
+                </Grid>
+            </Grid>
+            <Grid container xs={12}>
+                {renderForecast != undefined ? renderForecast.map(data => (
+                    <Grid item xs={4} sm={2}>
+                        <Forecast data={data} />
+                    </Grid>
+                )) : null}
             </Grid>
         </Grid>
     )
 }
 
 export default FieldSearch
+
+// let forecastWeather = {
+//     "Headline": {
+//         "EffectiveDate": "2021-07-25T08:00:00-05:00",
+//         "EffectiveEpochDate": 1627218000,
+//         "Severity": 4,
+//         "Text": "Pleasant Sunday",
+//         "Category": "mild",
+//         "EndDate": null,
+//         "EndEpochDate": null,
+//         "MobileLink": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/extended-weather-forecast/234000?lang=en-us",
+//         "Link": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?lang=en-us"
+//     },
+//     "DailyForecasts": [
+//         {
+//             "Date": "2021-07-20T07:00:00-05:00",
+//             "EpochDate": 1626782400,
+//             "Temperature": {
+//                 "Minimum": {
+//                     "Value": 57,
+//                     "Unit": "F",
+//                     "UnitType": 18
+//                 },
+//                 "Maximum": {
+//                     "Value": 76,
+//                     "Unit": "F",
+//                     "UnitType": 18
+//                 }
+//             },
+//             "Day": {
+//                 "Icon": 17,
+//                 "IconPhrase": "Partly sunny w/ t-storms",
+//                 "HasPrecipitation": true,
+//                 "PrecipitationType": "Rain",
+//                 "PrecipitationIntensity": "Light"
+//             },
+//             "Night": {
+//                 "Icon": 40,
+//                 "IconPhrase": "Mostly cloudy w/ showers",
+//                 "HasPrecipitation": true,
+//                 "PrecipitationType": "Rain",
+//                 "PrecipitationIntensity": "Moderate"
+//             },
+//             "Sources": [
+//                 "AccuWeather"
+//             ],
+//             "MobileLink": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?lang=en-us",
+//             "Link": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?lang=en-us"
+//         },
+//         {
+//             "Date": "2021-07-21T07:00:00-05:00",
+//             "EpochDate": 1626868800,
+//             "Temperature": {
+//                 "Minimum": {
+//                     "Value": 57,
+//                     "Unit": "F",
+//                     "UnitType": 18
+//                 },
+//                 "Maximum": {
+//                     "Value": 73,
+//                     "Unit": "F",
+//                     "UnitType": 18
+//                 }
+//             },
+//             "Day": {
+//                 "Icon": 17,
+//                 "IconPhrase": "Partly sunny w/ t-storms",
+//                 "HasPrecipitation": true,
+//                 "PrecipitationType": "Rain",
+//                 "PrecipitationIntensity": "Moderate"
+//             },
+//             "Night": {
+//                 "Icon": 42,
+//                 "IconPhrase": "Mostly cloudy w/ t-storms",
+//                 "HasPrecipitation": true,
+//                 "PrecipitationType": "Rain",
+//                 "PrecipitationIntensity": "Moderate"
+//             },
+//             "Sources": [
+//                 "AccuWeather"
+//             ],
+//             "MobileLink": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=1&lang=en-us",
+//             "Link": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=1&lang=en-us"
+//         },
+//         {
+//             "Date": "2021-07-22T07:00:00-05:00",
+//             "EpochDate": 1626955200,
+//             "Temperature": {
+//                 "Minimum": {
+//                     "Value": 57,
+//                     "Unit": "F",
+//                     "UnitType": 18
+//                 },
+//                 "Maximum": {
+//                     "Value": 73,
+//                     "Unit": "F",
+//                     "UnitType": 18
+//                 }
+//             },
+//             "Day": {
+//                 "Icon": 17,
+//                 "IconPhrase": "Partly sunny w/ t-storms",
+//                 "HasPrecipitation": true,
+//                 "PrecipitationType": "Rain",
+//                 "PrecipitationIntensity": "Moderate"
+//             },
+//             "Night": {
+//                 "Icon": 12,
+//                 "IconPhrase": "Showers",
+//                 "HasPrecipitation": true,
+//                 "PrecipitationType": "Rain",
+//                 "PrecipitationIntensity": "Moderate"
+//             },
+//             "Sources": [
+//                 "AccuWeather"
+//             ],
+//             "MobileLink": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=2&lang=en-us",
+//             "Link": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=2&lang=en-us"
+//         },
+//         {
+//             "Date": "2021-07-23T07:00:00-05:00",
+//             "EpochDate": 1627041600,
+//             "Temperature": {
+//                 "Minimum": {
+//                     "Value": 54,
+//                     "Unit": "F",
+//                     "UnitType": 18
+//                 },
+//                 "Maximum": {
+//                     "Value": 73,
+//                     "Unit": "F",
+//                     "UnitType": 18
+//                 }
+//             },
+//             "Day": {
+//                 "Icon": 17,
+//                 "IconPhrase": "Partly sunny w/ t-storms",
+//                 "HasPrecipitation": true,
+//                 "PrecipitationType": "Rain",
+//                 "PrecipitationIntensity": "Light"
+//             },
+//             "Night": {
+//                 "Icon": 12,
+//                 "IconPhrase": "Showers",
+//                 "HasPrecipitation": true,
+//                 "PrecipitationType": "Rain",
+//                 "PrecipitationIntensity": "Light"
+//             },
+//             "Sources": [
+//                 "AccuWeather"
+//             ],
+//             "MobileLink": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=3&lang=en-us",
+//             "Link": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=3&lang=en-us"
+//         },
+//         {
+//             "Date": "2021-07-24T07:00:00-05:00",
+//             "EpochDate": 1627128000,
+//             "Temperature": {
+//                 "Minimum": {
+//                     "Value": 53,
+//                     "Unit": "F",
+//                     "UnitType": 18
+//                 },
+//                 "Maximum": {
+//                     "Value": 76,
+//                     "Unit": "F",
+//                     "UnitType": 18
+//                 }
+//             },
+//             "Day": {
+//                 "Icon": 4,
+//                 "IconPhrase": "Intermittent clouds",
+//                 "HasPrecipitation": true,
+//                 "PrecipitationType": "Rain",
+//                 "PrecipitationIntensity": "Light"
+//             },
+//             "Night": {
+//                 "Icon": 34,
+//                 "IconPhrase": "Mostly clear",
+//                 "HasPrecipitation": false
+//             },
+//             "Sources": [
+//                 "AccuWeather"
+//             ],
+//             "MobileLink": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=4&lang=en-us",
+//             "Link": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/daily-weather-forecast/234000?day=4&lang=en-us"
+//         }
+//     ]
+// }
+
+// let tempStringForecast = [
+//     {
+//         "date": "2021-07-20T07:00:00-05:00",
+//         "tempture": {
+//             "Minimum": {
+//                 "Value": 57,
+//                 "Unit": "F",
+//                 "UnitType": 18
+//             },
+//             "Maximum": {
+//                 "Value": 76,
+//                 "Unit": "F",
+//                 "UnitType": 18
+//             }
+//         },
+//         "night": {
+//             "Icon": 40,
+//             "IconPhrase": "Mostly cloudy w/ showers",
+//             "HasPrecipitation": true,
+//             "PrecipitationType": "Rain",
+//             "PrecipitationIntensity": "Moderate"
+//         }
+//     },
+//     {
+//         "date": "2021-07-21T07:00:00-05:00",
+//         "tempture": {
+//             "Minimum": {
+//                 "Value": 57,
+//                 "Unit": "F",
+//                 "UnitType": 18
+//             },
+//             "Maximum": {
+//                 "Value": 73,
+//                 "Unit": "F",
+//                 "UnitType": 18
+//             }
+//         },
+//         "night": {
+//             "Icon": 42,
+//             "IconPhrase": "Mostly cloudy w/ t-storms",
+//             "HasPrecipitation": true,
+//             "PrecipitationType": "Rain",
+//             "PrecipitationIntensity": "Moderate"
+//         }
+//     },
+//     {
+//         "date": "2021-07-22T07:00:00-05:00",
+//         "tempture": {
+//             "Minimum": {
+//                 "Value": 57,
+//                 "Unit": "F",
+//                 "UnitType": 18
+//             },
+//             "Maximum": {
+//                 "Value": 73,
+//                 "Unit": "F",
+//                 "UnitType": 18
+//             }
+//         },
+//         "night": {
+//             "Icon": 12,
+//             "IconPhrase": "Showers",
+//             "HasPrecipitation": true,
+//             "PrecipitationType": "Rain",
+//             "PrecipitationIntensity": "Moderate"
+//         }
+//     },
+//     {
+//         "date": "2021-07-23T07:00:00-05:00",
+//         "tempture": {
+//             "Minimum": {
+//                 "Value": 54,
+//                 "Unit": "F",
+//                 "UnitType": 18
+//             },
+//             "Maximum": {
+//                 "Value": 73,
+//                 "Unit": "F",
+//                 "UnitType": 18
+//             }
+//         },
+//         "night": {
+//             "Icon": 12,
+//             "IconPhrase": "Showers",
+//             "HasPrecipitation": true,
+//             "PrecipitationType": "Rain",
+//             "PrecipitationIntensity": "Light"
+//         }
+//     },
+//     {
+//         "date": "2021-07-24T07:00:00-05:00",
+//         "tempture": {
+//             "Minimum": {
+//                 "Value": 53,
+//                 "Unit": "F",
+//                 "UnitType": 18
+//             },
+//             "Maximum": {
+//                 "Value": 76,
+//                 "Unit": "F",
+//                 "UnitType": 18
+//             }
+//         },
+//         "night": {
+//             "Icon": 34,
+//             "IconPhrase": "Mostly clear",
+//             "HasPrecipitation": false
+//         }
+//     }
+// ];

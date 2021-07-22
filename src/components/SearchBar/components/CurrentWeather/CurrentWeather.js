@@ -7,25 +7,35 @@ const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
             margin: theme.spacing(1),
-            width: theme.spacing(24),
-            height: theme.spacing(18),
+            width: theme.spacing(16),
+            height: theme.spacing(16),
         },
     },
+    typography: {
+        marginLeft: "5px",
+    },
+    image: {
+        marginTop: "2px",
+        contain: "content",
+        width: "80px",
+        height: "50px"
+    }
 }));
 
 function CurrentWeather(props) {
-
     const classes = useStyles();
     return (
         <Grid item className={classes.root}>
             <Paper variant="outlined" >
-                <Typography>
-                    Name: {props.objCurrentWeather[0]}
+                <Typography >
+                    <img src={props.objCurrentWeather[1]} alt="icon" className={classes.image} />
                 </Typography>
-                <Typography>
-                    <img src={props.objCurrentWeather[1]} alt="icon" />
+                <Typography className={classes.typography}>
+                    Current City:<Typography></Typography>
+                    {props.objCurrentWeather[0]}
                 </Typography>
-                <Typography>
+
+                <Typography className={classes.typography}>
                     Metric: {props.objCurrentWeather[2]}
                 </Typography>
             </Paper>

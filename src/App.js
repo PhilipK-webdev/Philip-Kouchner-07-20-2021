@@ -1,5 +1,7 @@
 import { Grid } from "@material-ui/core";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { Provider } from 'react-redux';
+import store from './redux/store';
 import NavigationBar from "./components/Navigation/NavigationBar";
 import { makeStyles } from '@material-ui/core/styles';
 import "./App.css";
@@ -10,18 +12,19 @@ const useStyles = makeStyles({
     backgroundColor: 'rgb(255, 135, 94)',
     borderRadius: 3,
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    height: "60px",
-    marginTop: "2px"
+    marginTop: "2px",
+
   },
 });
 
 function App() {
   const classes = useStyles();
   return (
-    <div className="App">
-      <Grid container >
+
+    <Provider store={store}>
+      <Grid container="fluid" xs={12} className="App">
         <Router>
-          <Grid container className={classes.rootNav} >
+          <Grid container className={classes.rootNav} xs={12}>
             <NavigationBar />
           </Grid>
           <Switch>
@@ -35,7 +38,7 @@ function App() {
           </Switch>
         </Router>
       </Grid>
-    </div>
+    </Provider>
   );
 }
 
