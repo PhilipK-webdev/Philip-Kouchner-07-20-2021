@@ -9,11 +9,7 @@ import Main from "./components/Main";
 import Favorite from "./components/Favorite";
 const useStyles = makeStyles({
   rootNav: {
-    backgroundColor: 'rgb(255, 135, 94)',
-    borderRadius: 3,
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    marginTop: "2px",
-
+    backgroundColor: "#306F8C",
   },
 });
 
@@ -22,7 +18,7 @@ function App() {
   return (
 
     <Provider store={store}>
-      <Grid container="fluid" xs={12} className="App">
+      <Grid container="fluid" xs={12} className="App" >
         <Router>
           <Grid container className={classes.rootNav} xs={12}>
             <NavigationBar />
@@ -38,7 +34,7 @@ function App() {
           </Switch>
         </Router>
       </Grid>
-    </Provider>
+    </Provider >
   );
 }
 

@@ -5,7 +5,7 @@ import SearchBar from './SearchBar/SearchBar'
 function Main() {
 
     return (
-        <Grid container style={{ justifyContent: "center" }}>
+        <Grid container justify="center">
             <Grid item>
                 <SearchBar />
             </Grid>

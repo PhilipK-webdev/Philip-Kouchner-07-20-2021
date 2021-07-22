@@ -17,7 +17,8 @@ const useStyles = makeStyles({
     title: {
         fontSize: "25px",
         marginLeft: "10px",
-        display: "flex"
+        display: "flex",
+        color: "white"
     },
     mainRoot: {
         flexWrap: "initial",

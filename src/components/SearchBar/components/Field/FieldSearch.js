@@ -37,11 +37,12 @@ function FieldSearch() {
     const [searchCity, setSearchCity] = useState("");
     const [keySearch, setKeySearch] = useState();
     const objCurrentWeatherRedux = useSelector(state => {
-        console.log('state ? ', state);
         return state.root.currentWeather;
     })
     const [renderForecast, setRenderForecast] = useState();
-
+    const renderForecastRedux = useSelector(state => {
+        return state.root.currentForecast;
+    })
     useEffect(() => {
         defaultCity();
     }, [])
@@ -67,10 +68,11 @@ function FieldSearch() {
             dispatch(actions.setCurrentWeather([...temp]));
             const result = resultTwo.data.DailyForecasts.map((data) => {
                 return {
+                    IconPhrase: data.Night.IconPhrase,
                     date: moment.utc(data.Date).format('MMMM Do YYYY, h:mm:ss a'),
                     temptureMin: data.Temperature.Minimum.Value + data.Temperature.Minimum.Unit,
                     temptureMin: data.Temperature.Maximum.Value + " " + data.Temperature.Maximum.Unit,
-                    IconPhrase: data.Night.IconPhrase
+
 
                 };
             });
@@ -78,7 +80,8 @@ function FieldSearch() {
             for (let i = 0; i < 5; i++) {
                 newArrayForecast[i] = (Object.values(result[i]));
             }
-            setRenderForecast(newArrayForecast);
+            // setRenderForecast(newArrayForecast);
+            dispatch(actions.setCurrentForecast([...newArrayForecast]))
         })).catch(err => console.log(err));
 
 
@@ -127,14 +130,160 @@ function FieldSearch() {
         e.preventDefault();
         // const currentWeather = getCurrentWeather(keySearch);
         // const forecast = getForecast(keySearch);
-        // currentWeather.then(res => console.log(res)).catch(err => console.log(err));
-        // forecast.then(res => console.log(res)).catch(err => console.log(err));
+        // currentWeather.then(res => {
+        //     console.log(res);
+        //     if (res.data[0].WeatherIcon < 10) {
+        //         res.data[0].WeatherIcon = `0${res.data[0].WeatherIcon}`;
+        //     }
+        //     let urlIcon = `https://developer.accuweather.com/sites/default/files/${res.data[0].WeatherIcon}-s.png`;
+        //     let temp = [];
+        //     temp.push(res.data[0].WeatherText);
+        //     temp.push(urlIcon);
+        //     temp.push(res.data[0].Temperature.Metric.Value + res.data[0].Temperature.Metric.Unit);
+        //     dispatch(actions.setCurrentWeather([...temp]));
+        // }).catch(err => console.log(err));
+        // forecast.then(res => {
+        //     const result = res.data.DailyForecasts.map((data) => {
+        //         return {
+        //             date: moment.utc(data.Date).format('MMMM Do YYYY, h:mm:ss a'),
+        //             temptureMin: data.Temperature.Minimum.Value + data.Temperature.Minimum.Unit,
+        //             temptureMin: data.Temperature.Maximum.Value + " " + data.Temperature.Maximum.Unit,
+        //             IconPhrase: data.Night.IconPhrase
+        //         };
+        //     });
+        //     let newArrayForecast = [];
+        //     for (let i = 0; i < 5; i++) {
+        //         newArrayForecast[i] = (Object.values(result[i]));
+        //     }
+        //     // setRenderForecast(newArrayForecast);
+        //     dispatch(actions.setCurrentForecast([...newArrayForecast]))
+        // }).catch(err => console.log(err));
 
-
-
-
-
-
+        let tempStringForecast = [
+            {
+                "date": "2021-07-20T07:00:00-05:00",
+                "tempture": {
+                    "Minimum": {
+                        "Value": 57,
+                        "Unit": "F",
+                        "UnitType": 18
+                    },
+                    "Maximum": {
+                        "Value": 76,
+                        "Unit": "F",
+                        "UnitType": 18
+                    }
+                },
+                "night": {
+                    "Icon": 40,
+                    "IconPhrase": "Mostly cloudy w/ showers",
+                    "HasPrecipitation": true,
+                    "PrecipitationType": "Rain",
+                    "PrecipitationIntensity": "Moderate"
+                }
+            },
+            {
+                "date": "2021-07-21T07:00:00-05:00",
+                "tempture": {
+                    "Minimum": {
+                        "Value": 57,
+                        "Unit": "F",
+                        "UnitType": 18
+                    },
+                    "Maximum": {
+                        "Value": 73,
+                        "Unit": "F",
+                        "UnitType": 18
+                    }
+                },
+                "night": {
+                    "Icon": 42,
+                    "IconPhrase": "Mostly cloudy w/ t-storms",
+                    "HasPrecipitation": true,
+                    "PrecipitationType": "Rain",
+                    "PrecipitationIntensity": "Moderate"
+                }
+            },
+            {
+                "date": "2021-07-22T07:00:00-05:00",
+                "tempture": {
+                    "Minimum": {
+                        "Value": 57,
+                        "Unit": "F",
+                        "UnitType": 18
+                    },
+                    "Maximum": {
+                        "Value": 73,
+                        "Unit": "F",
+                        "UnitType": 18
+                    }
+                },
+                "night": {
+                    "Icon": 12,
+                    "IconPhrase": "Showers",
+                    "HasPrecipitation": true,
+                    "PrecipitationType": "Rain",
+                    "PrecipitationIntensity": "Moderate"
+                }
+            },
+            {
+                "date": "2021-07-23T07:00:00-05:00",
+                "tempture": {
+                    "Minimum": {
+                        "Value": 54,
+                        "Unit": "F",
+                        "UnitType": 18
+                    },
+                    "Maximum": {
+                        "Value": 73,
+                        "Unit": "F",
+                        "UnitType": 18
+                    }
+                },
+                "night": {
+                    "Icon": 12,
+                    "IconPhrase": "Showers",
+                    "HasPrecipitation": true,
+                    "PrecipitationType": "Rain",
+                    "PrecipitationIntensity": "Light"
+                }
+            },
+            {
+                "date": "2021-07-24T07:00:00-05:00",
+                "tempture": {
+                    "Minimum": {
+                        "Value": 53,
+                        "Unit": "F",
+                        "UnitType": 18
+                    },
+                    "Maximum": {
+                        "Value": 76,
+                        "Unit": "F",
+                        "UnitType": 18
+                    }
+                },
+                "night": {
+                    "Icon": 34,
+                    "IconPhrase": "Mostly clear",
+                    "HasPrecipitation": false
+                }
+            }
+        ];
+        const result = tempStringForecast.map((data) => {
+            return {
+                date: moment.utc(data.date).format('MMMM Do YYYY, h:mm:ss a'),
+                temptureMin: data.tempture.Minimum.Value + data.tempture.Minimum.Unit,
+                temptureMin: data.tempture.Maximum.Value + " " + data.tempture.Maximum.Unit,
+                IconPhrase: data.night.IconPhrase
+            };
+        });
+        let newArrayForecast = [];
+        for (let i = 0; i < 5; i++) {
+            newArrayForecast[i] = (Object.values(result[i]));
+        }
+        console.log(newArrayForecast);
+        // setRenderForecast(newArrayForecast);
+        dispatch(actions.setCurrentForecast([...newArrayForecast]))
         if (searchCity !== "") {
             setSearchCity("");
         }
@@ -144,9 +293,9 @@ function FieldSearch() {
     };
     return (
         <Grid container xs={12}>
-            <Grid container xs={12} >
+            <Grid container xs={12}>
                 <Grid container xs={12} sm={10}>
-                    <FormControl variant="outlined" style={{ width: "90%" }}>
+                    <FormControl variant="outlined" style={{ width: "85%" }}>
                         <Autocomplete
                             options={arrayCity}
                             id="controlled-demo"
@@ -155,22 +304,22 @@ function FieldSearch() {
                             onKeyUp={onKeyPress}
                             onChange={onSave}
                             renderInput={(params) => <TextField {...params} margin="normal" variant="outlined" />}
-                            style={{ marginBottom: "25px" }}
+                            style={{ marginBottom: "2%", marginLeft: "10%" }}
                         />
                     </FormControl>
                 </Grid>
-                <Grid item style={{ marginTop: "17px" }} xs={12} sm={2}>
+                <Grid item style={{ marginTop: "25px" }} xs sm={2}  >
                     <ButtonSearch submit={submit} />
                 </Grid>
             </Grid>
-            <Grid container xs={12} style={{ marginTop: "5%" }}>
+            <Grid container xs={12} justify="center">
                 <Grid item sx={12} sm={12}>
-                    <CurrentWeather objCurrentWeather={objCurrentWeatherRedux} />
+                    {objCurrentWeatherRedux ? <CurrentWeather objCurrentWeather={objCurrentWeatherRedux} /> : null}
                 </Grid>
             </Grid>
-            <Grid container xs={12}>
-                {renderForecast != undefined ? renderForecast.map(data => (
-                    <Grid item xs={4} sm={2}>
+            <Grid container xs={12} justifyContent="center">
+                {renderForecastRedux != undefined ? renderForecastRedux.map(data => (
+                    <Grid item xs={4} sm={2} style={{ marginLeft: "1%" }}>
                         <Forecast data={data} />
                     </Grid>
                 )) : null}
@@ -370,113 +519,3 @@ export default FieldSearch
 //     ]
 // }
 
-// let tempStringForecast = [
-//     {
-//         "date": "2021-07-20T07:00:00-05:00",
-//         "tempture": {
-//             "Minimum": {
-//                 "Value": 57,
-//                 "Unit": "F",
-//                 "UnitType": 18
-//             },
-//             "Maximum": {
-//                 "Value": 76,
-//                 "Unit": "F",
-//                 "UnitType": 18
-//             }
-//         },
-//         "night": {
-//             "Icon": 40,
-//             "IconPhrase": "Mostly cloudy w/ showers",
-//             "HasPrecipitation": true,
-//             "PrecipitationType": "Rain",
-//             "PrecipitationIntensity": "Moderate"
-//         }
-//     },
-//     {
-//         "date": "2021-07-21T07:00:00-05:00",
-//         "tempture": {
-//             "Minimum": {
-//                 "Value": 57,
-//                 "Unit": "F",
-//                 "UnitType": 18
-//             },
-//             "Maximum": {
-//                 "Value": 73,
-//                 "Unit": "F",
-//                 "UnitType": 18
-//             }
-//         },
-//         "night": {
-//             "Icon": 42,
-//             "IconPhrase": "Mostly cloudy w/ t-storms",
-//             "HasPrecipitation": true,
-//             "PrecipitationType": "Rain",
-//             "PrecipitationIntensity": "Moderate"
-//         }
-//     },
-//     {
-//         "date": "2021-07-22T07:00:00-05:00",
-//         "tempture": {
-//             "Minimum": {
-//                 "Value": 57,
-//                 "Unit": "F",
-//                 "UnitType": 18
-//             },
-//             "Maximum": {
-//                 "Value": 73,
-//                 "Unit": "F",
-//                 "UnitType": 18
-//             }
-//         },
-//         "night": {
-//             "Icon": 12,
-//             "IconPhrase": "Showers",
-//             "HasPrecipitation": true,
-//             "PrecipitationType": "Rain",
-//             "PrecipitationIntensity": "Moderate"
-//         }
-//     },
-//     {
-//         "date": "2021-07-23T07:00:00-05:00",
-//         "tempture": {
-//             "Minimum": {
-//                 "Value": 54,
-//                 "Unit": "F",
-//                 "UnitType": 18
-//             },
-//             "Maximum": {
-//                 "Value": 73,
-//                 "Unit": "F",
-//                 "UnitType": 18
-//             }
-//         },
-//         "night": {
-//             "Icon": 12,
-//             "IconPhrase": "Showers",
-//             "HasPrecipitation": true,
-//             "PrecipitationType": "Rain",
-//             "PrecipitationIntensity": "Light"
-//         }
-//     },
-//     {
-//         "date": "2021-07-24T07:00:00-05:00",
-//         "tempture": {
-//             "Minimum": {
-//                 "Value": 53,
-//                 "Unit": "F",
-//                 "UnitType": 18
-//             },
-//             "Maximum": {
-//                 "Value": 76,
-//                 "Unit": "F",
-//                 "UnitType": 18
-//             }
-//         },
-//         "night": {
-//             "Icon": 34,
-//             "IconPhrase": "Mostly clear",
-//             "HasPrecipitation": false
-//         }
-//     }
-// ];

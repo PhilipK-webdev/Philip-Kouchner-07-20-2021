@@ -5,7 +5,7 @@ function MainPage() {
     return (
         <Link to="/" style={{ textDecoration: "none" }}>
             <Grid item>
-                <Typography style={{ fontSize: "20px", color: "black" }}>
+                <Typography style={{ fontSize: "20px", color: "white" }}>
                     Main
                 </Typography>
             </Grid>

@@ -17,7 +17,7 @@ const reducer = (state = initialState, action) => {
         case actions.SET_CURRENT_FORECAST: {
             return {
                 ...state,
-                currentWeather: action.payload
+                currentForecast: action.payload
             }
             break;
         }

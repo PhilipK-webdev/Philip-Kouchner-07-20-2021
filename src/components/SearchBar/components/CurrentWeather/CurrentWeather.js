@@ -1,48 +1,58 @@
-import { Grid, Typography } from '@material-ui/core'
-import React from 'react'
-import Paper from '@material-ui/core/Paper';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import { Grid } from '@material-ui/core';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 
-const useStyles = makeStyles((theme) => ({
+import Typography from '@material-ui/core/Typography';
+
+const useStyles = makeStyles({
     root: {
-        '& > *': {
-            margin: theme.spacing(1),
-            width: theme.spacing(16),
-            height: theme.spacing(16),
-        },
+        maxWidth: 320,
+        marginLeft: "13.5%",
     },
-    typography: {
-        marginLeft: "5px",
+    media: {
+        height: 140,
     },
-    image: {
-        marginTop: "2px",
-        contain: "content",
-        width: "80px",
-        height: "50px"
-    }
-}));
+});
+
 
 function CurrentWeather(props) {
     const classes = useStyles();
+    let component;
+    if (props.objCurrentWeather.legth > 0) {
+        component = (
+            <Card className={classes.root} >
+                <CardActionArea>
+                    <CardMedia
+                        className={classes.media}
+                        image={props.objCurrentWeather[1]}
+                        title="Contemplative Reptile"
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2">
+                            Current City
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            {props.objCurrentWeather[0]}
+                        </Typography>
+                        <Typography className={classes.typography}>
+                            Metric: {props.objCurrentWeather[2]}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card>
+        )
+    } else {
+        component = null;
+    }
     return (
-        <Grid item className={classes.root}>
-            <Paper variant="outlined" >
-                <Typography >
-                    <img src={props.objCurrentWeather[1]} alt="icon" className={classes.image} />
-                </Typography>
-                <Typography className={classes.typography}>
-                    Current City:<Typography></Typography>
-                    {props.objCurrentWeather[0]}
-                </Typography>
-
-                <Typography className={classes.typography}>
-                    Metric: {props.objCurrentWeather[2]}
-                </Typography>
-            </Paper>
+        <Grid item xs={12} sm={6}>
+            {component}
         </Grid >
     )
 }
 
 export default CurrentWeather
-
-

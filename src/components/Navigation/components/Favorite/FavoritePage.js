@@ -5,7 +5,7 @@ function FavoritePage() {
     return (
         <Link to="/favorite" style={{ textDecoration: "none" }}>
             <Grid item>
-                <Typography style={{ fontSize: "20px", color: "black" }} >
+                <Typography style={{ fontSize: "20px", color: "white" }} >
                     Favorite
                 </Typography>
             </Grid>
