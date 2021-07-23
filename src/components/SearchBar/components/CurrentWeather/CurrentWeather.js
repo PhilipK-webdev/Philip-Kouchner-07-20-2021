@@ -2,10 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import { Grid } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-
+import { Link } from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
@@ -14,43 +14,48 @@ const useStyles = makeStyles({
         marginLeft: "13.5%",
     },
     media: {
-        height: 140,
+        height: 50,
+        width: 100,
+        marginTop: "5%"
     },
-});
+    link: {
+        textDecoration: "none"
+    }
 
+});
 
 function CurrentWeather(props) {
     const classes = useStyles();
-    let component;
-    if (props.objCurrentWeather.legth > 0) {
-        component = (
+    return (
+        <Grid item xs={12} sm={6}>
             <Card className={classes.root} >
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}
                         image={props.objCurrentWeather[1]}
-                        title="Contemplative Reptile"
+                        title="Icon-Current Weather"
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            Current City
+                        <Typography gutterBottom >
+                            <strong> Current City:</strong><Typography>
+                                {props.objCurrentWeather[3]}
+                            </Typography>
                         </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            {props.objCurrentWeather[0]}
+                        <Typography >
+                            <strong> Current Weather:</strong><Typography>
+                                {props.objCurrentWeather[0]}
+                            </Typography>
                         </Typography>
                         <Typography className={classes.typography}>
-                            Metric: {props.objCurrentWeather[2]}
+                            <strong> Degree:</strong> {props.objCurrentWeather[2]}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
+                {/* <Link to="/favorite" className={classes.link} onClick={props.addToFavorite}>
+                    
+                </Link> */}
+                <Button >Add To Favorite</Button>
             </Card>
-        )
-    } else {
-        component = null;
-    }
-    return (
-        <Grid item xs={12} sm={6}>
-            {component}
         </Grid >
     )
 }
