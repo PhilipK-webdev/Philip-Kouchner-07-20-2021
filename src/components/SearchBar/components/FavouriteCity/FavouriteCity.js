@@ -6,6 +6,8 @@ import { Button, Grid } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
+
 
 const useStyles = makeStyles({
     root: {
@@ -26,9 +28,14 @@ const useStyles = makeStyles({
 
 function FavouriteCity(props) {
     const classes = useStyles();
+
+    const deleteCity = (e) => {
+        e.preventDefault();
+        const idToDelete = e.target.attributes.getNamedItem("data-id").value;
+    }
     return (
         <Grid item xs={12} sm={6}>
-            <Card className={classes.root} >
+            <Card className={classes.root}>
                 <CardActionArea>
                     <CardContent>
                         <Typography gutterBottom >
@@ -46,7 +53,10 @@ function FavouriteCity(props) {
                         </Typography>
                     </CardContent>
                 </CardActionArea>
-                <Button onClick={props.deleteCity}>Delete</Button>
+                <button onClick={deleteCity} data-id={props.objLocalStorage[0].ID}>Delete</button>
+                <Link to="/" className={classes.link}>
+                    <Button >Main</Button>
+                </Link>
             </Card>
         </Grid >
     )

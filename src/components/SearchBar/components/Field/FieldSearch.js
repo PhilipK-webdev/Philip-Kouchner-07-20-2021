@@ -5,6 +5,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import ButtonSearch from '../Button/ButtonSearch';
 import { Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import moment from 'moment';
 import CurrentWeather from '../CurrentWeather/CurrentWeather';
@@ -14,6 +15,7 @@ import { tempStringForecast, forecastWeather, currentWeather } from "./constants
 
 function FieldSearch() {
     const dispatch = useDispatch();
+    let location = useLocation();
     let apiKey = "";
     let keySearchTemp = "";
     const getApiKey = (function () {
@@ -44,7 +46,9 @@ function FieldSearch() {
     const renderForecastRedux = useSelector(state => {
         return state.root.currentForecast;
     })
+
     useEffect(() => {
+        console.log(location.pathname);
         defaultCity();
     }, [])
 
