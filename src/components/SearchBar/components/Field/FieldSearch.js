@@ -193,10 +193,22 @@ function FieldSearch() {
         setSearchCity(newValue);
     };
 
+    let arr = [];
     const addToFavorite = (e) => {
         e.preventDefault();
-        console.log("hello");
-        window.localStorage.setItem("city", JSON.stringify(objCurrentWeatherRedux));
+        arr.push({
+            ID: 24032,
+            name: "Tel Aviv",
+            weather: objCurrentWeatherRedux[0],
+            tempture: objCurrentWeatherRedux[2]
+        })
+        arr.push({
+            ID: 24032,
+            name: "San Francisco",
+            weather: objCurrentWeatherRedux[0],
+            tempture: objCurrentWeatherRedux[2]
+        });
+        window.localStorage.setItem("city", JSON.stringify(arr));
     }
     return (
         <Grid container xs={12}>

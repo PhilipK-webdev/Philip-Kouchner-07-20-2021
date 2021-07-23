@@ -26,39 +26,45 @@ const useStyles = makeStyles({
 
 function CurrentWeather(props) {
     const classes = useStyles();
-    console.log(props.objCurrentWeather);
-    return (
-        <Grid item xs={12} sm={6}>
-            <Card className={classes.root} >
-                <CardActionArea>
-                    <CardMedia
-                        className={classes.media}
-                        image={props.objCurrentWeather[1]}
-                        title="Icon-Current Weather"
-                    />
-                    <CardContent>
-                        <Typography gutterBottom >
-                            <strong> Current City:</strong><Typography>
-                                {props.objCurrentWeather[3]}
+    if (props.objCurrentWeather !== undefined) {
+        return (
+            <Grid item xs={12} sm={6}>
+                <Card className={classes.root} >
+                    <CardActionArea>
+                        <CardMedia
+                            className={classes.media}
+                            image={props.objCurrentWeather[1]}
+                            title="Icon-Current Weather"
+                        />
+                        <CardContent>
+                            <Typography gutterBottom >
+                                <strong> Current City:</strong><Typography>
+                                    {props.objCurrentWeather[3]}
+                                </Typography>
                             </Typography>
-                        </Typography>
-                        <Typography >
-                            <strong> Current Weather:</strong><Typography>
-                                {props.objCurrentWeather[0]}
+                            <Typography >
+                                <strong> Current Weather:</strong><Typography>
+                                    {props.objCurrentWeather[0]}
+                                </Typography>
                             </Typography>
-                        </Typography>
-                        <Typography className={classes.typography}>
-                            <strong> Degree:</strong> {props.objCurrentWeather[2]}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                {/* <Link to="/favorite" className={classes.link} >
-                    
-                </Link> */}
-                <Button onClick={props.addToFavorite}>Add To Favorite</Button>
-            </Card>
-        </Grid >
-    )
+                            <Typography className={classes.typography}>
+                                <strong> Degree:</strong> {props.objCurrentWeather[2]}
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                    <Button onClick={props.addToFavorite}>Add To Favorite</Button>
+                </Card>
+            </Grid >
+        )
+    } else {
+        return (
+            <div>
+                <Typography>
+                    Loading ...
+                </Typography>
+            </div>
+        )
+    }
 }
 
 export default CurrentWeather

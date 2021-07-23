@@ -6,7 +6,7 @@ import NavigationBar from "./components/Navigation/NavigationBar";
 import { makeStyles } from '@material-ui/core/styles';
 import "./App.css";
 import Main from "./components/Main";
-import Favorite from "./components/Favorite";
+import Favourite from "./components/Favourite";
 const useStyles = makeStyles({
   rootNav: {
     backgroundColor: "#306F8C",
@@ -29,7 +29,7 @@ function App() {
               <Main />
             </Route>
             <Route path="/favorite">
-              <Favorite />
+              <Favourite />
             </Route>
           </Switch>
         </Router>

@@ -1,9 +1,9 @@
 import React from 'react'
-import FavoritePage from './components/Favorite/FavoritePage'
 import MainPage from './components/Main/MainPage'
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
+import FavouritePage from './components/FavouritePage/FavouritePage';
 
 const useStyles = makeStyles({
     root: {
@@ -43,7 +43,7 @@ function NavigationBar() {
                     <MainPage />
                 </Grid>
                 <Grid item className={classes.item}>
-                    <FavoritePage />
+                    <FavouritePage />
                 </Grid>
             </Grid>
         </Grid>
