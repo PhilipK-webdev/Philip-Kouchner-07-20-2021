@@ -26,6 +26,7 @@ const useStyles = makeStyles({
 
 function CurrentWeather(props) {
     const classes = useStyles();
+    console.log(props.objCurrentWeather);
     return (
         <Grid item xs={12} sm={6}>
             <Card className={classes.root} >
@@ -51,10 +52,10 @@ function CurrentWeather(props) {
                         </Typography>
                     </CardContent>
                 </CardActionArea>
-                {/* <Link to="/favorite" className={classes.link} onClick={props.addToFavorite}>
+                {/* <Link to="/favorite" className={classes.link} >
                     
                 </Link> */}
-                <Button >Add To Favorite</Button>
+                <Button onClick={props.addToFavorite}>Add To Favorite</Button>
             </Card>
         </Grid >
     )

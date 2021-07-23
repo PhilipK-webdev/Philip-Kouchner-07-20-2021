@@ -39,7 +39,7 @@ function FieldSearch() {
     const [keySearch, setKeySearch] = useState();
     const objCurrentWeatherRedux = useSelector(state => {
         return state.root.currentWeather;
-    })
+    });
     const [renderForecast, setRenderForecast] = useState();
     const renderForecastRedux = useSelector(state => {
         return state.root.currentForecast;
@@ -92,7 +92,6 @@ function FieldSearch() {
         temp.push(urlIcon);
         temp.push(currentWeather[0].Temperature.Metric.Value + currentWeather[0].Temperature.Metric.Unit);
         temp.push("Tel Aviv");
-
         dispatch(actions.setCurrentWeather([...temp]));
 
     }
@@ -194,7 +193,8 @@ function FieldSearch() {
         setSearchCity(newValue);
     };
 
-    const addToFavorite = () => {
+    const addToFavorite = (e) => {
+        e.preventDefault();
         console.log("hello");
         window.localStorage.setItem("city", JSON.stringify(objCurrentWeatherRedux));
     }
