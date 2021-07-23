@@ -44,7 +44,7 @@ function FieldSearch() {
         return state.root.currentForecast;
     })
     useEffect(() => {
-        defaultCity();
+        // defaultCity();
     }, [])
 
     const defaultCity = () => {
@@ -145,10 +145,12 @@ function FieldSearch() {
         // forecast.then(res => {
         //     const result = res.data.DailyForecasts.map((data) => {
         //         return {
-        //             date: moment.utc(data.Date).format('MMMM Do YYYY, h:mm:ss a'),
+        // 
+        //             date: moment.utc(data.Date).format('MMMM Do YYYY'),
+        // IconPhrase: data.Night.IconPhrase,
         //             temptureMin: data.Temperature.Minimum.Value + data.Temperature.Minimum.Unit,
         //             temptureMin: data.Temperature.Maximum.Value + " " + data.Temperature.Maximum.Unit,
-        //             IconPhrase: data.Night.IconPhrase
+        //             
         //         };
         //     });
         //     let newArrayForecast = [];
@@ -175,7 +177,7 @@ function FieldSearch() {
                     }
                 },
                 "night": {
-                    "Icon": 40,
+                    "Icon": 5,
                     "IconPhrase": "Mostly cloudy w/ showers",
                     "HasPrecipitation": true,
                     "PrecipitationType": "Rain",
@@ -263,7 +265,7 @@ function FieldSearch() {
                     }
                 },
                 "night": {
-                    "Icon": 34,
+                    "Icon": 7,
                     "IconPhrase": "Mostly clear",
                     "HasPrecipitation": false
                 }
@@ -271,10 +273,12 @@ function FieldSearch() {
         ];
         const result = tempStringForecast.map((data) => {
             return {
-                date: moment.utc(data.date).format('MMMM Do YYYY, h:mm:ss a'),
+                IconTheme: data.night.Icon < 10 ? `https://developer.accuweather.com/sites/default/files/0${data.night.Icon}-s.png` :
+                    `https://developer.accuweather.com/sites/default/files/${data.night.Icon}-s.png`,
+                date: moment.utc(data.date).format('MMMM Do YYYY'),
                 temptureMin: data.tempture.Minimum.Value + data.tempture.Minimum.Unit,
                 temptureMin: data.tempture.Maximum.Value + " " + data.tempture.Maximum.Unit,
-                IconPhrase: data.night.IconPhrase
+
             };
         });
         let newArrayForecast = [];
@@ -295,7 +299,7 @@ function FieldSearch() {
         <Grid container xs={12}>
             <Grid container xs={12}>
                 <Grid container xs={12} sm={10}>
-                    <FormControl variant="outlined" style={{ width: "85%" }}>
+                    <FormControl variant="outlined" style={{ width: "80%" }}>
                         <Autocomplete
                             options={arrayCity}
                             id="controlled-demo"
