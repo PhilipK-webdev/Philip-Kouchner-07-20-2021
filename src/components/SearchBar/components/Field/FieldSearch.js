@@ -55,12 +55,9 @@ function FieldSearch() {
     });
 
     useEffect(() => {
-
         if (currentSearchCityRedux) {
-            console.log(currentSearchCityRedux);
             submit(null, currentSearchCityRedux);
         } else {
-            console.log("Default city");
             defaultCity();
         }
 
@@ -218,24 +215,18 @@ function FieldSearch() {
         setSearchCity(newValue);
     };
 
-    let arr = [];
+
     const addToFavorite = (e) => {
         e.preventDefault();
+        let arr = [];
         arr.push({
-            ID: 24032,
-            name: "Tel Aviv",
-            weather: objCurrentWeatherRedux[0],
-            tempture: objCurrentWeatherRedux[2]
-        });
-
-        arr.push({
-            ID: 24032,
-            name: "San Francisco",
+            ID: keySearch,
+            name: currentSearchCityRedux,
             weather: objCurrentWeatherRedux[0],
             tempture: objCurrentWeatherRedux[2]
         });
         dispatch(actions.setCityLocal([...arr]));
-        window.localStorage.setItem("city", JSON.stringify(localStorageArrayCity));
+        window.localStorage.setItem("city", JSON.stringify([...arr]));
 
     }
     return (

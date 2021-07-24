@@ -3,20 +3,18 @@ import FavouriteCity from './SearchBar/components/FavouriteCity/FavouriteCity';
 import { Grid, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../redux/actions';
+import Message from './Message/Message';
 function Favourite() {
-
-    const [objLocalStorage, setObjLocalStorage] = useState([]);
+    const dispatch = useDispatch();
     const [isLocalStorage, setIsLocalStorage] = useState(false);
     const localStorageArrayCity = useSelector(state => {
         return state.root.localStorageArrayCity;
     });
 
-    const dispatch = useDispatch();
     useEffect(() => {
         if (localStorage.length > 0) {
             setIsLocalStorage(true);
             dispatch(actions.setCityLocal(JSON.parse(window.localStorage.getItem("city"))));
-
         }
     }, [])
 
@@ -29,11 +27,17 @@ function Favourite() {
                     </Typography>
                 </Grid>
             </Grid>
-            <Grid item xs={4} sm={6} style={{ marginTop: "5%", justifyContent: "none", display: "flex" }}>
-                {isLocalStorage ? localStorageArrayCity.map((objLocal, index) => (
-                    <FavouriteCity objLocal={objLocal} index={index} />
-                )) : <h1>LOADING ...</h1>}
-            </Grid>
+            {isLocalStorage ? localStorageArrayCity.map((objLocal, index) => (
+                <Grid item xs={4} sm={6} style={{ marginTop: "5%", justifyContent: "none", display: "flex" }}>
+                    <FavouriteCity objLocal={objLocal} index={index} /> </Grid>
+            )) : <Grid container style={{ justifyContent: "center", }}>
+                <Grid item style={{ marginTop: "10%" }} sx={12} sm={6}>
+                    <Typography>
+                        <Message />
+                    </Typography>
+                </Grid>
+            </Grid>}
+
         </Grid>
     )
 }

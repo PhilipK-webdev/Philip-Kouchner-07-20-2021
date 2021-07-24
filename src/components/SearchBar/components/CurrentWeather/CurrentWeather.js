@@ -5,7 +5,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import { Button, Grid } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import { Link } from "react-router-dom";
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
@@ -52,7 +52,10 @@ function CurrentWeather(props) {
                             </Typography>
                         </CardContent>
                     </CardActionArea>
-                    <Button onClick={props.addToFavorite}>Add To Favorite</Button>
+                    <Grid item style={{ display: "flex", justifyContent: "space-between" }}>
+                        <Button onClick={props.addToFavorite} >Add To Favorite</Button>
+                        {<FavoriteIcon style={{ marginRight: "5%", marginTop: "2%", color: "rgb(153,153,0)" }} />}
+                    </Grid>
                 </Card>
             </Grid >
         )
