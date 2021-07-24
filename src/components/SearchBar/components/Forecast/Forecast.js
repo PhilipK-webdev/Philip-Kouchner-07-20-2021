@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 
 function Forecast(props) {
     const classes = useStyles();
-    const arrayHeadlines = ['Current Weather', 'Date', 'Degree'];
+    const arrayHeadlines = ['Current Weather', 'Date', 'Min', 'Max'];
     function isURL(str) {
         var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
             '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
@@ -28,6 +28,8 @@ function Forecast(props) {
             '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
         return pattern.test(str);
     }
+
+    console.log(props.data);
     return (
         <Card className={classes.root}>
             <CardActionArea>

@@ -4,6 +4,7 @@ const initialState = {
     currentWeather: [],
     currentForecast: [],
     localStorageArrayCity: [],
+    currentSearchCity: ""
 };
 
 const reducer = (state = initialState, action) => {
@@ -26,6 +27,13 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 localStorageArrayCity: action.payload
+            }
+            break;
+        }
+        case actions.CURRENT_SEARCH_CITY: {
+            return {
+                ...state,
+                currentSearchCity: action.payload
             }
             break;
         }

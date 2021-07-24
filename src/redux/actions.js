@@ -13,6 +13,12 @@ export const setCurrentForecast = data => {
     }
 }
 
+export const setCurrentSearchCity = data => {
+    return {
+        type: actions.CURRENT_SEARCH_CITY,
+        payload: data
+    }
+}
 export const setCityLocal = data => {
     return {
         type: actions.DELETE_CITY,

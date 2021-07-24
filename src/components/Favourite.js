@@ -10,13 +10,13 @@ function Favourite() {
     const localStorageArrayCity = useSelector(state => {
         return state.root.localStorageArrayCity;
     });
+
     const dispatch = useDispatch();
     useEffect(() => {
         if (localStorage.length > 0) {
-            setObjLocalStorage(JSON.parse(window.localStorage.getItem("city")));
             setIsLocalStorage(true);
-            dispatch(actions.setCityLocal([...objLocalStorage]));
-            console.log(localStorageArrayCity);
+            dispatch(actions.setCityLocal(JSON.parse(window.localStorage.getItem("city"))));
+
         }
     }, [])
 

@@ -29,14 +29,24 @@ const useStyles = makeStyles({
 
 function FavouriteCity(props) {
     const classes = useStyles();
-    const localStorageArrayCity = useSelector(state => {
-        return state.root.localStorageArrayCity;
-    });
+    // const localStorageArrayCity = useSelector(state => {
+    //     return state.root.localStorageArrayCity;
+    // });
     const dispatch = useDispatch();
     const deleteCity = (e) => {
         e.preventDefault();
         const idToDelete = parseInt(e.target.attributes.getNamedItem("data-id").value);
-        dispatch(actions.setCityLocal([...localStorageArrayCity.slice(idToDelete, 1)]));
+        let arrTemp = JSON.parse(window.localStorage.getItem("city"));
+        console.log(idToDelete);
+        arrTemp.splice(idToDelete, 1);
+        console.log(arrTemp);
+        localStorage.clear();
+        window.localStorage.setItem("city", JSON.stringify(arrTemp));
+        dispatch(actions.setCityLocal([...arrTemp]));
+    }
+
+    const setCity = () => {
+        dispatch(actions.setCurrentSearchCity(props.objLocal.name));
     }
     return (
         <Grid item xs={12} sm={6}>
@@ -61,7 +71,7 @@ function FavouriteCity(props) {
                 </CardActionArea>
                 <button onClick={deleteCity} data-id={props.index}>Delete</button>
                 <Link to="/" className={classes.link}>
-                    <button data-id={props.objLocal.ID}>Main</button>
+                    <button data-id={props.objLocal.ID} onClick={setCity}>Main</button>
                 </Link>
             </Card>
         </Grid >

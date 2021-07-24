@@ -16,6 +16,8 @@ function FieldSearch() {
     const dispatch = useDispatch();
     let apiKey = "";
     let keySearchTemp = "";
+
+    // .env for front end
     const getApiKey = (function () {
         return {
             privateMethodEncapsulated: function () {
@@ -37,6 +39,10 @@ function FieldSearch() {
     const [arrayCity, setArrayCity] = useState([]);
     const [searchCity, setSearchCity] = useState("");
     const [keySearch, setKeySearch] = useState();
+    const currentSearchCityRedux = useSelector(state => {
+        return state.root.currentSearchCity;
+    });
+
     const objCurrentWeatherRedux = useSelector(state => {
         return state.root.currentWeather;
     });
@@ -49,11 +55,18 @@ function FieldSearch() {
     });
 
     useEffect(() => {
-        defaultCity();
+
+        if (currentSearchCityRedux) {
+            console.log(currentSearchCityRedux);
+            submit(null, currentSearchCityRedux);
+        } else {
+            console.log("Default city");
+            defaultCity();
+        }
+
     }, [])
 
     const defaultCity = () => {
-
         // let tempURLToGetCurrentWeather = `http://dataservice.accuweather.com/currentconditions/v1/${getKeySearch.privateMethodEncapsulated()}?apikey=${getApiKey.privateMethodEncapsulated()}`;
         // let tempURLToGetForesast = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${getKeySearch.privateMethodEncapsulated()}?apikey=${getApiKey.privateMethodEncapsulated()}`;
         // const requestCurrent = axios.get(tempURLToGetCurrentWeather);
@@ -70,13 +83,15 @@ function FieldSearch() {
         //     temp.push(resultOne.data[0].WeatherText);
         //     temp.push(urlIcon);
         //     temp.push(resultOne.data[0].Temperature.Metric.Value + resultOne.data[0].Temperature.Metric.Unit);
+        //     temp.push("Tel Aviv");
+        //     // 
         //     dispatch(actions.setCurrentWeather([...temp]));
         //     const result = resultTwo.data.DailyForecasts.map((data) => {
         //         return {
-        //             IconPhrase: data.Night.IconPhrase,
-        //             date: moment.utc(data.Date).format('MMMM Do YYYY, h:mm:ss a'),
+        //             IconTheme: `https://developer.accuweather.com/sites/default/files/${data.Night.Icon < 10 ? '0' + data.Night.Icon : data.Night.Icon}-s.png`,
+        //             date: // date: moment.utc(data.Date).format('MMMM Do YYYY'),,
         //             temptureMin: data.Temperature.Minimum.Value + data.Temperature.Minimum.Unit,
-        //             temptureMin: data.Temperature.Maximum.Value + " " + data.Temperature.Maximum.Unit,
+        //             temptureMax: data.Temperature.Maximum.Value + " " + data.Temperature.Maximum.Unit,
         //         };
         //     });
 
@@ -84,7 +99,6 @@ function FieldSearch() {
         //     for (let i = 0; i < 5; i++) {
         //         newArrayForecast[i] = (Object.values(result[i]));
         //     }
-        //     // setRenderForecast(newArrayForecast);
         //     dispatch(actions.setCurrentForecast([...newArrayForecast]))
         // })).catch(err => console.log(err));
         if (currentWeather[0].WeatherIcon < 10) {
@@ -95,7 +109,7 @@ function FieldSearch() {
         temp.push(currentWeather[0].WeatherText);
         temp.push(urlIcon);
         temp.push(currentWeather[0].Temperature.Metric.Value + currentWeather[0].Temperature.Metric.Unit);
-        temp.push("Tel Aviv");
+        temp.push("Tel Aviv")
         dispatch(actions.setCurrentWeather([...temp]));
 
     }
@@ -139,12 +153,20 @@ function FieldSearch() {
         const responseForecast = await axios(url);
         return responseForecast;
     }
-    const submit = (e) => {
-        e.preventDefault();
-        // const currentWeather = getCurrentWeather(keySearch);
-        // const forecast = getForecast(keySearch);
+    const submit = (e, cityName = "") => {
+        if (e) {
+            e.preventDefault();
+        }
+        let stringSearchCity = keySearch;
+        if (cityName) {
+            stringSearchCity = cityName;
+
+        }
+        // dispatch(actions.setCurrentSearchCity(stringSearchCity));
+        // const currentWeather = getCurrentWeather(stringSearchCity);
+        // const forecast = getForecast(stringSearchCity);
         // currentWeather.then(res => {
-        //     console.log(res);
+        //     dispatch(actions.setCurrentSearchCity(stringSearchCity));
         //     if (res.data[0].WeatherIcon < 10) {
         //         res.data[0].WeatherIcon = `0${res.data[0].WeatherIcon}`;
         //     }
@@ -158,25 +180,26 @@ function FieldSearch() {
         // forecast.then(res => {
         //     const result = res.data.DailyForecasts.map((data) => {
         //         return {
-        // 
+
         //             date: moment.utc(data.Date).format('MMMM Do YYYY'),
-        // IconPhrase: data.Night.IconPhrase,
+        //             IconPhrase: data.Night.IconPhrase,
         //             temptureMin: data.Temperature.Minimum.Value + data.Temperature.Minimum.Unit,
         //             temptureMin: data.Temperature.Maximum.Value + " " + data.Temperature.Maximum.Unit,
-        //             
+
         //         };
         //     });
         //     let newArrayForecast = [];
         //     for (let i = 0; i < 5; i++) {
         //         newArrayForecast[i] = (Object.values(result[i]));
         //     }
-        //     // setRenderForecast(newArrayForecast);
         //     dispatch(actions.setCurrentForecast([...newArrayForecast]))
         // }).catch(err => console.log(err));
+        // if (searchCity !== "") {
+        //     setSearchCity("");
+        // }
         const result = tempStringForecast.map((data) => {
             return {
-                IconTheme: data.night.Icon < 10 ? `https://developer.accuweather.com/sites/default/files/0${data.night.Icon}-s.png` :
-                    `https://developer.accuweather.com/sites/default/files/${data.night.Icon}-s.png`,
+                IconTheme: `https://developer.accuweather.com/sites/default/files/${data.night.Icon < 10 ? '0' + data.night.Icon : data.night.Icon}-s.png`,
                 date: moment.utc(data.date).format('MMMM Do YYYY'),
                 temptureMin: data.tempture.Minimum.Value + data.tempture.Minimum.Unit,
                 temptureMin: data.tempture.Maximum.Value + " " + data.tempture.Maximum.Unit,
@@ -189,9 +212,7 @@ function FieldSearch() {
         }
         // setRenderForecast(newArrayForecast);
         dispatch(actions.setCurrentForecast([...newArrayForecast]))
-        if (searchCity !== "") {
-            setSearchCity("");
-        }
+
     };
     const onSave = (event, newValue) => {
         setSearchCity(newValue);
@@ -206,12 +227,20 @@ function FieldSearch() {
             weather: objCurrentWeatherRedux[0],
             tempture: objCurrentWeatherRedux[2]
         });
+
+        arr.push({
+            ID: 24032,
+            name: "San Francisco",
+            weather: objCurrentWeatherRedux[0],
+            tempture: objCurrentWeatherRedux[2]
+        });
         dispatch(actions.setCityLocal([...arr]));
         window.localStorage.setItem("city", JSON.stringify(localStorageArrayCity));
 
     }
     return (
         <Grid container xs={12}>
+            {/* SearchBar new component */}
             <Grid container xs={12}>
                 <Grid container xs={12} sm={10}>
                     <FormControl variant="outlined" style={{ width: "80%" }}>
@@ -231,6 +260,7 @@ function FieldSearch() {
                     <ButtonSearch submit={submit} />
                 </Grid>
             </Grid>
+            {/* SearchBar new component */}
             <Grid container xs={12} justify="center">
                 <Grid item sx={12} sm={12}>
                     {<CurrentWeather objCurrentWeather={objCurrentWeatherRedux} addToFavorite={addToFavorite} />}
