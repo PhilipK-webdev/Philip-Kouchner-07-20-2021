@@ -3,6 +3,7 @@ import * as actions from '../constants';
 const initialState = {
     currentWeather: [],
     currentForecast: [],
+    localStorageArrayCity: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -18,6 +19,13 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentForecast: action.payload
+            }
+            break;
+        }
+        case actions.DELETE_CITY: {
+            return {
+                ...state,
+                localStorageArrayCity: action.payload
             }
             break;
         }

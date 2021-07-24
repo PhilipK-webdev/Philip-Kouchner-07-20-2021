@@ -7,7 +7,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from '../../../../redux/actions';
 
 const useStyles = makeStyles({
     root: {
@@ -28,10 +29,14 @@ const useStyles = makeStyles({
 
 function FavouriteCity(props) {
     const classes = useStyles();
-
+    const localStorageArrayCity = useSelector(state => {
+        return state.root.localStorageArrayCity;
+    });
+    const dispatch = useDispatch();
     const deleteCity = (e) => {
         e.preventDefault();
-        const idToDelete = e.target.attributes.getNamedItem("data-id").value;
+        const idToDelete = parseInt(e.target.attributes.getNamedItem("data-id").value);
+        dispatch(actions.setCityLocal([...localStorageArrayCity.slice(idToDelete, 1)]));
     }
     return (
         <Grid item xs={12} sm={6}>
@@ -40,22 +45,23 @@ function FavouriteCity(props) {
                     <CardContent>
                         <Typography gutterBottom >
                             <strong> Current City:</strong><Typography>
-                                {"adasdasd"}
+                                {props.objLocal.name}
                             </Typography>
                         </Typography>
                         <Typography >
                             <strong> Current Weather:</strong><Typography>
-                                {"dasdaasdasd"}
+                                {props.objLocal.weather}
                             </Typography>
                         </Typography>
                         <Typography className={classes.typography}>
-                            <strong> Degree:</strong>adsdasdasd
+                            <strong> Degree:</strong>
+                            {props.objLocal.tempture}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
-                <button onClick={deleteCity} data-id={props.objLocalStorage[0].ID}>Delete</button>
+                <button onClick={deleteCity} data-id={props.index}>Delete</button>
                 <Link to="/" className={classes.link}>
-                    <Button >Main</Button>
+                    <button data-id={props.objLocal.ID}>Main</button>
                 </Link>
             </Card>
         </Grid >

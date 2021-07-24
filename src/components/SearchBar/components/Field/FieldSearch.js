@@ -5,7 +5,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import ButtonSearch from '../Button/ButtonSearch';
 import { Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from "react-router-dom";
 import axios from "axios";
 import moment from 'moment';
 import CurrentWeather from '../CurrentWeather/CurrentWeather';
@@ -15,7 +14,6 @@ import { tempStringForecast, forecastWeather, currentWeather } from "./constants
 
 function FieldSearch() {
     const dispatch = useDispatch();
-    let location = useLocation();
     let apiKey = "";
     let keySearchTemp = "";
     const getApiKey = (function () {
@@ -42,13 +40,15 @@ function FieldSearch() {
     const objCurrentWeatherRedux = useSelector(state => {
         return state.root.currentWeather;
     });
-    const [renderForecast, setRenderForecast] = useState();
+    // const [renderForecast, setRenderForecast] = useState();
     const renderForecastRedux = useSelector(state => {
         return state.root.currentForecast;
-    })
+    });
+    const localStorageArrayCity = useSelector(state => {
+        return state.root.localStorageArrayCity;
+    });
 
     useEffect(() => {
-        console.log(location.pathname);
         defaultCity();
     }, [])
 
@@ -205,14 +205,10 @@ function FieldSearch() {
             name: "Tel Aviv",
             weather: objCurrentWeatherRedux[0],
             tempture: objCurrentWeatherRedux[2]
-        })
-        arr.push({
-            ID: 24032,
-            name: "San Francisco",
-            weather: objCurrentWeatherRedux[0],
-            tempture: objCurrentWeatherRedux[2]
         });
-        window.localStorage.setItem("city", JSON.stringify(arr));
+        dispatch(actions.setCityLocal([...arr]));
+        window.localStorage.setItem("city", JSON.stringify(localStorageArrayCity));
+
     }
     return (
         <Grid container xs={12}>

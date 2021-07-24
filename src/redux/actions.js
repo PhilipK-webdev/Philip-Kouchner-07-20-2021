@@ -12,3 +12,10 @@ export const setCurrentForecast = data => {
         payload: data
     }
 }
+
+export const setCityLocal = data => {
+    return {
+        type: actions.DELETE_CITY,
+        payload: data
+    }
+}
