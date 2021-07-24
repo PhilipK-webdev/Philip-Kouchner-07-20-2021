@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/Philip-Kouchner-07-20-2021/static/css/main.62954820.chunk.css",
-    "main.js": "/Philip-Kouchner-07-20-2021/static/js/main.c57d1fd6.chunk.js",
-    "main.js.map": "/Philip-Kouchner-07-20-2021/static/js/main.c57d1fd6.chunk.js.map",
+    "main.js": "/Philip-Kouchner-07-20-2021/static/js/main.115f9b18.chunk.js",
+    "main.js.map": "/Philip-Kouchner-07-20-2021/static/js/main.115f9b18.chunk.js.map",
     "runtime-main.js": "/Philip-Kouchner-07-20-2021/static/js/runtime-main.4c100cfa.js",
     "runtime-main.js.map": "/Philip-Kouchner-07-20-2021/static/js/runtime-main.4c100cfa.js.map",
-    "static/js/2.5c9eb222.chunk.js": "/Philip-Kouchner-07-20-2021/static/js/2.5c9eb222.chunk.js",
-    "static/js/2.5c9eb222.chunk.js.map": "/Philip-Kouchner-07-20-2021/static/js/2.5c9eb222.chunk.js.map",
+    "static/js/2.5a7b0944.chunk.js": "/Philip-Kouchner-07-20-2021/static/js/2.5a7b0944.chunk.js",
+    "static/js/2.5a7b0944.chunk.js.map": "/Philip-Kouchner-07-20-2021/static/js/2.5a7b0944.chunk.js.map",
     "static/js/3.92db2a29.chunk.js": "/Philip-Kouchner-07-20-2021/static/js/3.92db2a29.chunk.js",
     "static/js/3.92db2a29.chunk.js.map": "/Philip-Kouchner-07-20-2021/static/js/3.92db2a29.chunk.js.map",
     "index.html": "/Philip-Kouchner-07-20-2021/index.html",
     "static/css/main.62954820.chunk.css.map": "/Philip-Kouchner-07-20-2021/static/css/main.62954820.chunk.css.map",
-    "static/js/2.5c9eb222.chunk.js.LICENSE.txt": "/Philip-Kouchner-07-20-2021/static/js/2.5c9eb222.chunk.js.LICENSE.txt"
+    "static/js/2.5a7b0944.chunk.js.LICENSE.txt": "/Philip-Kouchner-07-20-2021/static/js/2.5a7b0944.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.4c100cfa.js",
-    "static/js/2.5c9eb222.chunk.js",
+    "static/js/2.5a7b0944.chunk.js",
     "static/css/main.62954820.chunk.css",
-    "static/js/main.c57d1fd6.chunk.js"
+    "static/js/main.115f9b18.chunk.js"
   ]
 }
