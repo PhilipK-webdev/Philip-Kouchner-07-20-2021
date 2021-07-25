@@ -5,6 +5,8 @@ import { Typography } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import FavouritePage from './components/FavouritePage/FavouritePage';
 import Switch from '@material-ui/core/Switch';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 const useStyles = makeStyles({
     root: {
         justifyContent: "flex-end",
@@ -25,7 +27,9 @@ const useStyles = makeStyles({
         marginTop: "10px",
     },
     toggle: {
-        marginTop: "0.3%"
+        marginTop: "0.3%",
+        color: "white",
+
     }
 
 });
@@ -50,7 +54,12 @@ function NavigationBar(props) {
                     <FavouritePage />
                 </Grid>
                 <Grid item className={classes.toggle}>
-                    <Switch checked={props.checked} onChange={props.handleChange} />
+                    <FormGroup>
+                        <FormControlLabel
+                            control={<Switch checked={props.checked} onChange={props.handleChange} />}
+                            label="Toggle"
+                        />
+                    </FormGroup>
                 </Grid>
             </Grid>
         </Grid>
@@ -58,3 +67,4 @@ function NavigationBar(props) {
 }
 
 export default NavigationBar
+

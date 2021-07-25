@@ -7,6 +7,7 @@ const initialState = {
     currentSearchCity: "",
     isToAddFavourite: false,
     isFavouriteEmpty: false,
+    isToggle: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -50,6 +51,13 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFavouriteEmpty: action.payload
+            }
+            break;
+        }
+        case actions.IS_TOGGLE: {
+            return {
+                ...state,
+                isToggle: action.payload
             }
             break;
         }

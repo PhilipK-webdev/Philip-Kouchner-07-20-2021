@@ -23,7 +23,9 @@ function Display() {
     const currentSearchCityRedux = useSelector(state => {
         return state.root.currentSearchCity;
     });
-
+    const isToggle = useSelector(state => {
+        return state.root.isToggle;
+    });
     const objCurrentWeatherRedux = useSelector(state => {
         return state.root.currentWeather;
     });
@@ -78,6 +80,7 @@ function Display() {
         //     }
         //     dispatch(actions.setCurrentForecast([...newArrayForecast]))
         // })).catch(err => console.log(err));
+        console.log(currentWeather[0].Temperature.Metric.Value);
         if (currentWeather[0].WeatherIcon < 10) {
             currentWeather[0].WeatherIcon = `0${currentWeather[0].WeatherIcon}`;
         }
@@ -178,7 +181,7 @@ function Display() {
         //             date: moment.utc(data.Date).format('MMMM Do YYYY'),
         //             IconPhrase: data.Night.IconPhrase,
         //             temptureMin: data.Temperature.Minimum.Value + data.Temperature.Minimum.Unit,
-        //             temptureMin: data.Temperature.Maximum.Value + " " + data.Temperature.Maximum.Unit,
+        //             temptureMax: data.Temperature.Maximum.Value + " " + data.Temperature.Maximum.Unit,
 
         //         };
         //     });

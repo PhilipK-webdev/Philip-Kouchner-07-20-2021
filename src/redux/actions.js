@@ -36,4 +36,13 @@ export const setIsFavouriteEmpty = data => {
         type: actions.IS_FAVOURITE_EMPTY,
         payload: data
     }
+
+}
+
+export const setIsToggle = data => {
+    return {
+        type: actions.IS_TOGGLE,
+        payload: data
+    }
+
 }
