@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import TextField from "@material-ui/core/TextField";
-import FormControl from "@material-ui/core/FormControl";
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import ButtonSearch from '../Button/ButtonSearch';
 import { Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from "axios";
@@ -10,9 +6,7 @@ import moment from 'moment';
 import CurrentWeather from '../CurrentWeather/CurrentWeather';
 import Forecast from '../Forecast/Forecast';
 import * as actions from '../../../../redux/actions';
-// import { tempStringForecast, forecastWeather, currentWeather } from "./constants";
-// import AutoSearch from "../AutoSearch/AutoSearch";
-
+import AutoSearch from "../AutoSearch/AutoSearch";
 
 function Display() {
     const dispatch = useDispatch();
@@ -40,8 +34,8 @@ function Display() {
     }, [])
 
     const defaultCity = () => {
-        let tempURLToGetCurrentWeather = `http://dataservice.accuweather.com/currentconditions/v1/${process.env.REACT_APP_ID_SEARCH}?apikey=${process.env.REACT_APP_KEY}`;
-        let tempURLToGetForesast = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${process.env.REACT_APP_ID_SEARCH}?apikey=${process.env.REACT_APP_KEY}`;
+        let tempURLToGetCurrentWeather = `http://dataservice.accuweather.com/currentconditions/v1/${process.env.REACT_APP_ID_SEARCH}?apikey=${process.env.REACT_APP_KEY3}`;
+        let tempURLToGetForesast = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${process.env.REACT_APP_ID_SEARCH}?apikey=${process.env.REACT_APP_KEY3}`;
         const requestCurrent = axios.get(tempURLToGetCurrentWeather);
         const requestForecast = axios.get(tempURLToGetForesast);
         axios.all([requestCurrent, requestForecast]).then(axios.spread((...response) => {
@@ -59,7 +53,6 @@ function Display() {
             temp.push("Tel Aviv");
             dispatch(actions.setCurrentWeather([...temp]));
             const result = resultForecast.data.DailyForecasts.map((data) => {
-                console.log(data.Night.Icon);
                 return {
                     IconTheme: `https://developer.accuweather.com/sites/default/files/${data.Night.Icon < 10 ? '0' + data.Night.Icon : data.Night.Icon}-s.png`,
                     date: moment.utc(data.Date).format('MMMM Do YYYY'),
@@ -73,6 +66,7 @@ function Display() {
             }
             dispatch(actions.setCurrentForecast([...newArrayForecast]))
         })).catch(err => console.log(err));
+
 
     }
     const onKeyPress = (e) => {
@@ -106,7 +100,7 @@ function Display() {
         }
     }
     const userGetCity = async (userChoice) => {
-        const url = `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${process.env.REACT_APP_KEY2}&q=${userChoice}`;
+        const url = `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${process.env.REACT_APP_KEY3}&q=${userChoice}`;
         const response = await axios(url);
         return response;
     }
@@ -121,18 +115,7 @@ function Display() {
         }
         return tempArrOfNameCity;
     }
-    const getCurrentWeather = async (keySearch) => {
-        console.log(keySearch);
-        const url = `http://dataservice.accuweather.com/currentconditions/v1/${keySearch}?apikey=${process.env.REACT_APP_KEY2}`;
-        const responseCurrentWeather = await axios(url);
-        return responseCurrentWeather;
-    }
 
-    const getForecast = async (keySearch) => {
-        const url = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${keySearch}?apikey=${process.env.REACT_APP_KEY2}`;
-        const responseForecast = await axios(url);
-        return responseForecast;
-    }
     const submit = (e, cityName = "") => {
         if (e) {
             e.preventDefault();
@@ -143,27 +126,28 @@ function Display() {
 
         }
         dispatch(actions.setCurrentSearchCity(stringSearchCity));
-        const currentWeather = getCurrentWeather(keySearch);
-        const forecast = getForecast(keySearch);
-        currentWeather.then(res => {
-            dispatch(actions.setCurrentSearchCity(stringSearchCity));
-            if (res.data[0].WeatherIcon < 10) {
-                res.data[0].WeatherIcon = `0${res.data[0].WeatherIcon}`;
+        const urlCurrent = `http://dataservice.accuweather.com/currentconditions/v1/${keySearch}?apikey=${process.env.REACT_APP_KEY3}`;
+        const urlForecast = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${keySearch}?apikey=${process.env.REACT_APP_KEY3}`;
+        const currentWeather = axios.get(urlCurrent);
+        const forecast = axios.get(urlForecast);
+        axios.all([currentWeather, forecast]).then(axios.spread((...response) => {
+            const resultCurrentWeather = response[0];
+            const resultForecast = response[1];
+
+            if (resultCurrentWeather.data[0].WeatherIcon < 10) {
+                resultCurrentWeather.data[0].WeatherIcon = `0${resultCurrentWeather.data[0].WeatherIcon}`;
             }
-            let urlIcon = `https://developer.accuweather.com/sites/default/files/${res.data[0].WeatherIcon}-s.png`;
+            let urlIcon = `https://developer.accuweather.com/sites/default/files/${resultCurrentWeather.data[0].WeatherIcon}-s.png`;
             let tempArrayCurrentCity = [];
-            tempArrayCurrentCity.push(res.data[0].WeatherText);
+            tempArrayCurrentCity.push(resultCurrentWeather.data[0].WeatherText);
             tempArrayCurrentCity.push(urlIcon);
-            tempArrayCurrentCity.push(res.data[0].Temperature.Metric.Value + res.data[0].Temperature.Metric.Unit);
+            tempArrayCurrentCity.push(resultCurrentWeather.data[0].Temperature.Metric.Value + resultCurrentWeather.data[0].Temperature.Metric.Unit);
             tempArrayCurrentCity.push(stringSearchCity);
             dispatch(actions.setCurrentWeather([...tempArrayCurrentCity]));
-        }).catch(err => console.log(err));
-        forecast.then(res => {
-            const result = res.data.DailyForecasts.map((data) => {
+            const result = resultForecast.data.DailyForecasts.map((data) => {
                 return {
-
+                    IconPhrase: `https://developer.accuweather.com/sites/default/files/${data.Night.Icon < 10 ? '0' + data.Night.Icon : data.Night.Icon}-s.png`,
                     date: moment.utc(data.Date).format('MMMM Do YYYY'),
-                    IconPhrase: `https://developer.accuweather.com/sites/default/files/${data.Night.Icon < 10 ? '0' + data.Night.Icon : data.Night.Icon}-s.png,`,
                     temptureMin: data.Temperature.Minimum.Value + data.Temperature.Minimum.Unit,
                     temptureMax: data.Temperature.Maximum.Value + " " + data.Temperature.Maximum.Unit,
 
@@ -173,12 +157,9 @@ function Display() {
             for (let i = 0; i < 5; i++) {
                 newArrayForecast[i] = (Object.values(result[i]));
             }
-            dispatch(actions.setCurrentForecast([...newArrayForecast]))
-        }).catch(err => console.log(err));
-        if (searchCity !== "") {
-            setSearchCity("");
-        }
 
+            dispatch(actions.setCurrentForecast([...newArrayForecast]));
+        })).catch(err => console.log(err));
 
     };
     const onSave = (event, newValue) => {
@@ -202,25 +183,7 @@ function Display() {
 
         <Grid container >
             <AutoSearch arrayCity={arrayCity} searchCity={searchCity} onKeyPress={onKeyPress} onSave={onSave} submit={submit} validString={validString} />
-            {/* <Grid container xs={12}>
-                <Grid container xs={12} sm={10}>
-                    <FormControl variant="outlined" style={{ width: "80%" }}>
-                        <Autocomplete
-                            options={arrayCity}
-                            id="controlled-demo"
-                            value={searchCity}
-                            getOptionLabel={(option) => option}
-                            onKeyUp={onKeyPress}
-                            onChange={onSave}
-                            renderInput={(params) => <TextField {...params} margin="normal" variant="outlined" />}
-                            style={{ marginBottom: "2%", marginLeft: "10%" }}
-                        />
-                    </FormControl>
-                </Grid>
-                <Grid item style={{ marginTop: "25px" }} xs sm={2}  >
-                    <ButtonSearch submit={submit} />
-                </Grid>
-            </Grid> */}
+
             <Grid container justifyContent="center">
                 <Grid item sx={12} sm={12}>
                     {<CurrentWeather objCurrentWeather={objCurrentWeatherRedux} addToFavorite={addToFavorite} />}
@@ -228,7 +191,7 @@ function Display() {
             </Grid>
             <Grid container justifyContent="center">
                 {renderForecastRedux != undefined ? renderForecastRedux.map((data, index) => (
-                    <Grid item xs={4} sm={2} style={{ marginLeft: "1%" }}>
+                    <Grid item xs={4} sm={2} style={{ marginLeft: "1%" }} key={index}>
                         <Forecast data={data} key={index} />
                     </Grid>
                 )) : null}
@@ -241,37 +204,4 @@ export default Display
 
 
 
-// console.log(currentWeather[0].Temperature.Metric.Value);
-// if (currentWeather[0].WeatherIcon < 10) {
-//     currentWeather[0].WeatherIcon = `0${currentWeather[0].WeatherIcon}`;
-// }
-// let urlIcon = `https://developer.accuweather.com/sites/default/files/${currentWeather[0].WeatherIcon}-s.png`;
-// let temp = [];
-// temp.push(currentWeather[0].WeatherText);
-// temp.push(urlIcon);
-// temp.push(currentWeather[0].Temperature.Metric.Value + currentWeather[0].Temperature.Metric.Unit);
-// temp.push("Tel Aviv")
-// dispatch(actions.setCurrentWeather([...temp]));
 
-
-{/* SearchBar new component */ }
-{ }
-{/* SearchBar new component */ }
-
-
-
-             // const result = tempStringForecast.map((data) => {
-        //     return {
-        //         IconTheme: `https://developer.accuweather.com/sites/default/files/${data.night.Icon < 10 ? '0' + data.night.Icon : data.night.Icon}-s.png`,
-        //         date: moment.utc(data.date).format('MMMM Do YYYY'),
-        //         temptureMin: data.tempture.Minimum.Value + data.tempture.Minimum.Unit,
-        //         temptureMin: data.tempture.Maximum.Value + " " + data.tempture.Maximum.Unit,
-
-        //     };
-        // });
-        // let newArrayForecast = [];
-        // for (let i = 0; i < 5; i++) {
-        //     newArrayForecast[i] = (Object.values(result[i]));
-        // }
-        // // setRenderForecast(newArrayForecast);
-        // dispatch(actions.setCurrentForecast([...newArrayForecast]))

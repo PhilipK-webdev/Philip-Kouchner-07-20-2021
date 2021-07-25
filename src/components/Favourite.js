@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 
 });
 function Favourite() {
-    const dispatch = useDispatch();
+
     const classes = useStyles();
     const [isLocalStorage, setIsLocalStorage] = useState(false);
     const localStorageArrayCity = useSelector(state => {
@@ -43,8 +43,9 @@ function Favourite() {
     const isFavouriteEmpty = useSelector(state => {
         return state.root.isFavouriteEmpty;
     });
-
+    const dispatch = useDispatch();
     useEffect(() => {
+
         if (localStorage.length > 0) {
             setIsLocalStorage(true);
             dispatch(actions.setCityLocal(JSON.parse(window.localStorage.getItem("city"))));

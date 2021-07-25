@@ -478,4 +478,160 @@ let currentWeather = [{
     "MobileLink": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/current-weather/234000?lang=en-us",
     "Link": "http://www.accuweather.com/en/mx/san-francisco-coacalco/234000/current-weather/234000?lang=en-us"
 }];
-module.exports = { tempStringForecast, forecastWeather, currentWeather };
+
+
+
+
+const autoComplete = [
+    {
+        "Version": 1,
+        "Key": "303032",
+        "Type": "City",
+        "Rank": 32,
+        "LocalizedName": "Las Palmas de Gran Canaria",
+        "Country": {
+            "ID": "ES",
+            "LocalizedName": "Spain"
+        },
+        "AdministrativeArea": {
+            "ID": "CN",
+            "LocalizedName": "Canary Islands"
+        }
+    },
+    {
+        "Version": 1,
+        "Key": "264877",
+        "Type": "City",
+        "Rank": 35,
+        "LocalizedName": "Las Piñas",
+        "Country": {
+            "ID": "PH",
+            "LocalizedName": "Philippines"
+        },
+        "AdministrativeArea": {
+            "ID": "MNL",
+            "LocalizedName": "Metropolitan Manila"
+        }
+    },
+    {
+        "Version": 1,
+        "Key": "329506",
+        "Type": "City",
+        "Rank": 35,
+        "LocalizedName": "Las Vegas",
+        "Country": {
+            "ID": "US",
+            "LocalizedName": "United States"
+        },
+        "AdministrativeArea": {
+            "ID": "NV",
+            "LocalizedName": "Nevada"
+        }
+    },
+    {
+        "Version": 1,
+        "Key": "119190",
+        "Type": "City",
+        "Rank": 41,
+        "LocalizedName": "Las Tunas",
+        "Country": {
+            "ID": "CU",
+            "LocalizedName": "Cuba"
+        },
+        "AdministrativeArea": {
+            "ID": "10",
+            "LocalizedName": "Las Tunas"
+        }
+    },
+    {
+        "Version": 1,
+        "Key": "300620",
+        "Type": "City",
+        "Rank": 41,
+        "LocalizedName": "Las Anod",
+        "Country": {
+            "ID": "SO",
+            "LocalizedName": "Somalia"
+        },
+        "AdministrativeArea": {
+            "ID": "SO",
+            "LocalizedName": "Sool"
+        }
+    },
+    {
+        "Version": 1,
+        "Key": "305850",
+        "Type": "City",
+        "Rank": 42,
+        "LocalizedName": "Las Rozas de Madrid",
+        "Country": {
+            "ID": "ES",
+            "LocalizedName": "Spain"
+        },
+        "AdministrativeArea": {
+            "ID": "MD",
+            "LocalizedName": "Madrid"
+        }
+    },
+    {
+        "Version": 1,
+        "Key": "5131",
+        "Type": "City",
+        "Rank": 45,
+        "LocalizedName": "Las Heras",
+        "Country": {
+            "ID": "AR",
+            "LocalizedName": "Argentina"
+        },
+        "AdministrativeArea": {
+            "ID": "M",
+            "LocalizedName": "Mendoza"
+        }
+    },
+    {
+        "Version": 1,
+        "Key": "231943",
+        "Type": "City",
+        "Rank": 45,
+        "LocalizedName": "Las Margaritas",
+        "Country": {
+            "ID": "MX",
+            "LocalizedName": "Mexico"
+        },
+        "AdministrativeArea": {
+            "ID": "CHP",
+            "LocalizedName": "Chiapas"
+        }
+    },
+    {
+        "Version": 1,
+        "Key": "241304",
+        "Type": "City",
+        "Rank": 45,
+        "LocalizedName": "Las Choapas",
+        "Country": {
+            "ID": "MX",
+            "LocalizedName": "Mexico"
+        },
+        "AdministrativeArea": {
+            "ID": "VER",
+            "LocalizedName": "Veracruz"
+        }
+    },
+    {
+        "Version": 1,
+        "Key": "329556",
+        "Type": "City",
+        "Rank": 45,
+        "LocalizedName": "Las Cruces",
+        "Country": {
+            "ID": "US",
+            "LocalizedName": "United States"
+        },
+        "AdministrativeArea": {
+            "ID": "NM",
+            "LocalizedName": "New Mexico"
+        }
+    }
+]
+module.exports = { tempStringForecast, forecastWeather, currentWeather, autoComplete };

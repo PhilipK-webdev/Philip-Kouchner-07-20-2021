@@ -32,7 +32,9 @@ function AutoSearch(props) {
                         options={props.arrayCity}
                         id="controlled-demo"
                         value={props.searchCity}
-                        getOptionLabel={(option) => option}
+                        getOptionLabel={(option) => {
+                            return option;
+                        }}
                         onKeyUp={props.onKeyPress}
                         onChange={props.onSave}
                         renderInput={(params) => <TextField {...params} margin="normal" variant="outlined" className={classes.textField} />}

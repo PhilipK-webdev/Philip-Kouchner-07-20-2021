@@ -19,16 +19,8 @@ const useStyles = makeStyles({
 function Forecast(props) {
     const classes = useStyles();
     const arrayHeadlines = ['Current Weather', 'Date', 'Min', 'Max'];
-    function isURL(str) {
-        var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
-            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-            '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-        return pattern.test(str);
-    }
     return (
+
         <Card className={classes.root}>
             <CardActionArea>
                 <CardContent>
@@ -36,7 +28,8 @@ function Forecast(props) {
                         {props.data.map((property, index) => (
                             <Typography key={index}>
                                 <strong>{arrayHeadlines[index] + ":"}</strong>
-                                {isURL(property) ? <img src={property} width="75" height="45" key={index}></img> : <span key={index} className={classes.span}>{property}</span>}
+                                {console.log(property)}
+                                {index == 0 ? <img src={property} width="75" height="45" key={index}></img> : <span key={index} className={classes.span}>{property}</span>}
                             </Typography>
                         ))}
                     </Typography>

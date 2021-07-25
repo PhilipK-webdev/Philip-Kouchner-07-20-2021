@@ -7,6 +7,7 @@ export const setCurrentWeather = data => {
     }
 }
 export const setCurrentForecast = data => {
+    console.log(data);
     return {
         type: actions.SET_CURRENT_FORECAST,
         payload: data
