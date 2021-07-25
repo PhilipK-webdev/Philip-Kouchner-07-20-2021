@@ -159,6 +159,11 @@ function Display() {
             }
 
             dispatch(actions.setCurrentForecast([...newArrayForecast]));
+            if (searchCity !== "") {
+                setSearchCity("");
+                setIsValidString(true);
+            }
+
         })).catch(err => console.log(err));
 
     };
