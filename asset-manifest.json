@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/Philip-Kouchner-07-20-2021/static/css/main.daa32bab.chunk.css",
-    "main.js": "/Philip-Kouchner-07-20-2021/static/js/main.9dde0587.chunk.js",
-    "main.js.map": "/Philip-Kouchner-07-20-2021/static/js/main.9dde0587.chunk.js.map",
-    "runtime-main.js": "/Philip-Kouchner-07-20-2021/static/js/runtime-main.87c5c115.js",
-    "runtime-main.js.map": "/Philip-Kouchner-07-20-2021/static/js/runtime-main.87c5c115.js.map",
-    "static/js/2.84a59ce6.chunk.js": "/Philip-Kouchner-07-20-2021/static/js/2.84a59ce6.chunk.js",
-    "static/js/2.84a59ce6.chunk.js.map": "/Philip-Kouchner-07-20-2021/static/js/2.84a59ce6.chunk.js.map",
-    "static/js/3.566ebfbd.chunk.js": "/Philip-Kouchner-07-20-2021/static/js/3.566ebfbd.chunk.js",
-    "static/js/3.566ebfbd.chunk.js.map": "/Philip-Kouchner-07-20-2021/static/js/3.566ebfbd.chunk.js.map",
+    "main.css": "/Philip-Kouchner-07-20-2021/static/css/main.dfa5cf6d.chunk.css",
+    "main.js": "/Philip-Kouchner-07-20-2021/static/js/main.ecd6e979.chunk.js",
+    "main.js.map": "/Philip-Kouchner-07-20-2021/static/js/main.ecd6e979.chunk.js.map",
+    "runtime-main.js": "/Philip-Kouchner-07-20-2021/static/js/runtime-main.fb147c10.js",
+    "runtime-main.js.map": "/Philip-Kouchner-07-20-2021/static/js/runtime-main.fb147c10.js.map",
+    "static/js/2.1cf4c4e3.chunk.js": "/Philip-Kouchner-07-20-2021/static/js/2.1cf4c4e3.chunk.js",
+    "static/js/2.1cf4c4e3.chunk.js.map": "/Philip-Kouchner-07-20-2021/static/js/2.1cf4c4e3.chunk.js.map",
+    "static/js/3.0eeccfb0.chunk.js": "/Philip-Kouchner-07-20-2021/static/js/3.0eeccfb0.chunk.js",
+    "static/js/3.0eeccfb0.chunk.js.map": "/Philip-Kouchner-07-20-2021/static/js/3.0eeccfb0.chunk.js.map",
     "index.html": "/Philip-Kouchner-07-20-2021/index.html",
-    "static/css/main.daa32bab.chunk.css.map": "/Philip-Kouchner-07-20-2021/static/css/main.daa32bab.chunk.css.map",
-    "static/js/2.84a59ce6.chunk.js.LICENSE.txt": "/Philip-Kouchner-07-20-2021/static/js/2.84a59ce6.chunk.js.LICENSE.txt"
+    "static/css/main.dfa5cf6d.chunk.css.map": "/Philip-Kouchner-07-20-2021/static/css/main.dfa5cf6d.chunk.css.map",
+    "static/js/2.1cf4c4e3.chunk.js.LICENSE.txt": "/Philip-Kouchner-07-20-2021/static/js/2.1cf4c4e3.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.87c5c115.js",
-    "static/js/2.84a59ce6.chunk.js",
-    "static/css/main.daa32bab.chunk.css",
-    "static/js/main.9dde0587.chunk.js"
+    "static/js/runtime-main.fb147c10.js",
+    "static/js/2.1cf4c4e3.chunk.js",
+    "static/css/main.dfa5cf6d.chunk.css",
+    "static/js/main.ecd6e979.chunk.js"
   ]
 }
