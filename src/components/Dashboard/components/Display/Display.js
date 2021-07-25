@@ -11,7 +11,8 @@ import CurrentWeather from '../CurrentWeather/CurrentWeather';
 import Forecast from '../Forecast/Forecast';
 import * as actions from '../../../../redux/actions';
 import { tempStringForecast, forecastWeather, currentWeather } from "./constants";
-import AutoSearch from "../AutoSearch/AutoSearch"
+import AutoSearch from "../AutoSearch/AutoSearch";
+
 
 function Display() {
     const dispatch = useDispatch();
@@ -44,49 +45,49 @@ function Display() {
     }, [])
 
     const defaultCity = () => {
-        let tempURLToGetCurrentWeather = `http://dataservice.accuweather.com/currentconditions/v1/${process.env.REACT_APP_ID_SEARCH}?apikey=${process.env.REACT_APP_KEY}`;
-        let tempURLToGetForesast = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${process.env.REACT_APP_ID_SEARCH}?apikey=${process.env.REACT_APP_KEY}`;
-        const requestCurrent = axios.get(tempURLToGetCurrentWeather);
-        const requestForecast = axios.get(tempURLToGetForesast);
-        axios.all([requestCurrent, requestForecast]).then(axios.spread((...response) => {
+        // let tempURLToGetCurrentWeather = `http://dataservice.accuweather.com/currentconditions/v1/${process.env.REACT_APP_ID_SEARCH}?apikey=${process.env.REACT_APP_KEY}`;
+        // let tempURLToGetForesast = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${process.env.REACT_APP_ID_SEARCH}?apikey=${process.env.REACT_APP_KEY}`;
+        // const requestCurrent = axios.get(tempURLToGetCurrentWeather);
+        // const requestForecast = axios.get(tempURLToGetForesast);
+        // axios.all([requestCurrent, requestForecast]).then(axios.spread((...response) => {
 
-            const resultCurrentWeather = response[0];
-            const resultForecast = response[1];
-            if (resultCurrentWeather.data[0].WeatherIcon < 10) {
-                resultCurrentWeather.data[0].WeatherIcon = `0${resultCurrentWeather.data[0].WeatherIcon}`;
-            }
-            let urlIcon = `https://developer.accuweather.com/sites/default/files/${resultCurrentWeather.data[0].WeatherIcon}-s.png`;
-            let temp = [];
-            temp.push(resultCurrentWeather.data[0].WeatherText);
-            temp.push(urlIcon);
-            temp.push(resultCurrentWeather.data[0].Temperature.Metric.Value + resultCurrentWeather.data[0].Temperature.Metric.Unit);
-            temp.push("Tel Aviv");
-            dispatch(actions.setCurrentWeather([...temp]));
-            const result = resultForecast.data.DailyForecasts.map((data) => {
-                console.log(data.Night.Icon);
-                return {
-                    IconTheme: `https://developer.accuweather.com/sites/default/files/${data.Night.Icon < 10 ? '0' + data.Night.Icon : data.Night.Icon}-s.png`,
-                    date: moment.utc(data.Date).format('MMMM Do YYYY'),
-                    temptureMin: data.Temperature.Minimum.Value + data.Temperature.Minimum.Unit,
-                    temptureMax: data.Temperature.Maximum.Value + " " + data.Temperature.Maximum.Unit,
-                };
-            });
-            let newArrayForecast = [];
-            for (let i = 0; i < 5; i++) {
-                newArrayForecast[i] = (Object.values(result[i]));
-            }
-            dispatch(actions.setCurrentForecast([...newArrayForecast]))
-        })).catch(err => console.log(err));
-        // if (currentWeather[0].WeatherIcon < 10) {
-        //     currentWeather[0].WeatherIcon = `0${currentWeather[0].WeatherIcon}`;
-        // }
-        // let urlIcon = `https://developer.accuweather.com/sites/default/files/${currentWeather[0].WeatherIcon}-s.png`;
-        // let temp = [];
-        // temp.push(currentWeather[0].WeatherText);
-        // temp.push(urlIcon);
-        // temp.push(currentWeather[0].Temperature.Metric.Value + currentWeather[0].Temperature.Metric.Unit);
-        // temp.push("Tel Aviv")
-        // dispatch(actions.setCurrentWeather([...temp]));
+        //     const resultCurrentWeather = response[0];
+        //     const resultForecast = response[1];
+        //     if (resultCurrentWeather.data[0].WeatherIcon < 10) {
+        //         resultCurrentWeather.data[0].WeatherIcon = `0${resultCurrentWeather.data[0].WeatherIcon}`;
+        //     }
+        //     let urlIcon = `https://developer.accuweather.com/sites/default/files/${resultCurrentWeather.data[0].WeatherIcon}-s.png`;
+        //     let temp = [];
+        //     temp.push(resultCurrentWeather.data[0].WeatherText);
+        //     temp.push(urlIcon);
+        //     temp.push(resultCurrentWeather.data[0].Temperature.Metric.Value + resultCurrentWeather.data[0].Temperature.Metric.Unit);
+        //     temp.push("Tel Aviv");
+        //     dispatch(actions.setCurrentWeather([...temp]));
+        //     const result = resultForecast.data.DailyForecasts.map((data) => {
+        //         console.log(data.Night.Icon);
+        //         return {
+        //             IconTheme: `https://developer.accuweather.com/sites/default/files/${data.Night.Icon < 10 ? '0' + data.Night.Icon : data.Night.Icon}-s.png`,
+        //             date: moment.utc(data.Date).format('MMMM Do YYYY'),
+        //             temptureMin: data.Temperature.Minimum.Value + data.Temperature.Minimum.Unit,
+        //             temptureMax: data.Temperature.Maximum.Value + " " + data.Temperature.Maximum.Unit,
+        //         };
+        //     });
+        //     let newArrayForecast = [];
+        //     for (let i = 0; i < 5; i++) {
+        //         newArrayForecast[i] = (Object.values(result[i]));
+        //     }
+        //     dispatch(actions.setCurrentForecast([...newArrayForecast]))
+        // })).catch(err => console.log(err));
+        if (currentWeather[0].WeatherIcon < 10) {
+            currentWeather[0].WeatherIcon = `0${currentWeather[0].WeatherIcon}`;
+        }
+        let urlIcon = `https://developer.accuweather.com/sites/default/files/${currentWeather[0].WeatherIcon}-s.png`;
+        let temp = [];
+        temp.push(currentWeather[0].WeatherText);
+        temp.push(urlIcon);
+        temp.push(currentWeather[0].Temperature.Metric.Value + currentWeather[0].Temperature.Metric.Unit);
+        temp.push("Tel Aviv")
+        dispatch(actions.setCurrentWeather([...temp]));
 
     }
     const onKeyPress = (e) => {
@@ -226,25 +227,26 @@ function Display() {
         window.localStorage.setItem("city", JSON.stringify([...arr]));
     }
     return (
+
         <Grid container xs={12}>
             {/* SearchBar new component */}
             {/* <Grid container xs={12}>
                 <Grid container xs={12} sm={10}>
-                    <FormControl variant="outlined" style={{ width: "80%" }}>
-                        <Autocomplete
-                            options={arrayCity}
-                            id="controlled-demo"
-                            value={searchCity}
-                            getOptionLabel={(option) => option}
-                            onKeyUp={onKeyPress}
-                            onChange={onSave}
-                            renderInput={(params) => <TextField {...params} margin="normal" variant="outlined" />}
-                            style={{ marginBottom: "2%", marginLeft: "10%" }}
-                        />
-                    </FormControl>
+                <FormControl variant="outlined" style={{ width: "80%" }}>
+                <Autocomplete
+                options={arrayCity}
+                id="controlled-demo"
+                value={searchCity}
+                getOptionLabel={(option) => option}
+                onKeyUp={onKeyPress}
+                onChange={onSave}
+                renderInput={(params) => <TextField {...params} margin="normal" variant="outlined" />}
+                style={{ marginBottom: "2%", marginLeft: "10%" }}
+                />
+                </FormControl>
                 </Grid>
                 <Grid item style={{ marginTop: "25px" }} xs sm={2}  >
-                    <ButtonSearch submit={submit} />
+                <ButtonSearch submit={submit} />
                 </Grid>
             </Grid> */}
             {/* SearchBar new component */}

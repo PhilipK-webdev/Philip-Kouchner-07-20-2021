@@ -8,7 +8,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
-
 const useStyles = makeStyles({
     root: {
         maxWidth: 320,
@@ -38,6 +37,7 @@ function CurrentWeather(props) {
     if (props.objCurrentWeather !== undefined) {
         return (
             <Grid item xs={12} sm={6}>
+
                 <Card className={classes.root} >
                     <CardActionArea>
                         <CardMedia
@@ -66,6 +66,7 @@ function CurrentWeather(props) {
                         {isToAddFavourite ? <FavoriteIcon className={classes.icon} /> : null}
                     </Grid>
                 </Card>
+
             </Grid >
         )
     }

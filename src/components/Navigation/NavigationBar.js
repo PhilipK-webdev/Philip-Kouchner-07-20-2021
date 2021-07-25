@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import FavouritePage from './components/FavouritePage/FavouritePage';
-
+import Switch from '@material-ui/core/Switch';
 const useStyles = makeStyles({
     root: {
         justifyContent: "flex-end",
@@ -23,10 +23,13 @@ const useStyles = makeStyles({
     mainRoot: {
         flexWrap: "initial",
         marginTop: "10px",
+    },
+    toggle: {
+        marginTop: "0.3%"
     }
 
 });
-function NavigationBar() {
+function NavigationBar(props) {
     const classes = useStyles();
     return (
         <Grid container className={classes.mainRoot} >
@@ -42,8 +45,12 @@ function NavigationBar() {
                 <Grid item className={classes.item}>
                     <MainPage />
                 </Grid>
+
                 <Grid item className={classes.item}>
                     <FavouritePage />
+                </Grid>
+                <Grid item className={classes.toggle}>
+                    <Switch checked={props.checked} onChange={props.handleChange} />
                 </Grid>
             </Grid>
         </Grid>
