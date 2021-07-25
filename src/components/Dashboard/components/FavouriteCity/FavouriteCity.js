@@ -65,7 +65,7 @@ function FavouriteCity(props) {
                     <CardContent >
                         <Typography gutterBottom className={classes.headline} >
                             <strong> Current City:</strong>
-                            <Typography style={{ fontSize: "20px" }}>
+                            <Typography >
                                 {props.objLocal.name}
                             </Typography>
                         </Typography>

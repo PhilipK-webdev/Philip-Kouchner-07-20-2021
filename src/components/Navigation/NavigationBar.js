@@ -39,10 +39,7 @@ function NavigationBar(props) {
         <Grid container className={classes.mainRoot} >
             <Grid item >
                 <Typography className={classes.title}>
-                    Weather
-                    <Typography className={classes.title}>
-                        App
-                    </Typography>
+                    WeatherApp
                 </Typography>
             </Grid>
             <Grid container className={classes.root}>

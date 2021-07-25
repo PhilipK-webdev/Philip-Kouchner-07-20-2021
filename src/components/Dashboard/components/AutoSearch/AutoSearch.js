@@ -25,8 +25,8 @@ function AutoSearch(props) {
 
     const classes = useStyles();
     return (
-        <Grid container xs={12}>
-            <Grid container xs={12} sm={10}>
+        <Grid container >
+            <Grid item xs={12} sm={10}>
                 <FormControl variant="outlined" className={classes.form}>
                     <Autocomplete
                         options={props.arrayCity}

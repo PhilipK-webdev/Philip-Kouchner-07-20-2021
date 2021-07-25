@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Typography from '@material-ui/core/Typography';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 const useStyles = makeStyles({
     root: {
         maxWidth: 320,
@@ -25,6 +25,10 @@ const useStyles = makeStyles({
         marginRight: "5%",
         marginTop: "2%",
         color: "#ffee58"
+    },
+    divBtn: {
+        display: "flex",
+        justifyContent: "space-between"
     }
 
 });
@@ -40,28 +44,34 @@ function CurrentWeather(props) {
 
                 <Card className={classes.root} >
                     <CardActionArea>
-                        <CardMedia
-                            className={classes.media}
-                            image={props.objCurrentWeather[1]}
-                            title="Icon-Current Weather"
-                        />
+                        {props.objCurrentWeather[1] ? (
+                            <CardMedia
+                                className={classes.media}
+                                image={props.objCurrentWeather[1]}
+                                title="Icon-Current Weather"
+                            />
+                        ) : null}
+
                         <CardContent>
                             <Typography gutterBottom >
-                                <strong> Current City:</strong><Typography>
-                                    {props.objCurrentWeather[3]}
-                                </Typography>
+                                <strong> Current City:</strong>
+                                <br></br>
+                                {props.objCurrentWeather[3]}
                             </Typography>
                             <Typography >
-                                <strong> Current Weather:</strong><Typography>
-                                    {props.objCurrentWeather[0]}
-                                </Typography>
+                                <strong> Current Weather:</strong>
+                                <br></br>
+                                {props.objCurrentWeather[0]}
+
                             </Typography>
                             <Typography className={classes.typography}>
-                                <strong> Degree:</strong> {props.objCurrentWeather[2]}
+                                <strong> Degree:</strong>
+                                <br></br>
+                                {props.objCurrentWeather[2]}
                             </Typography>
                         </CardContent>
                     </CardActionArea>
-                    <Grid item style={{ display: "flex", justifyContent: "space-between" }}>
+                    <Grid item className={classes.divBtn}>
                         <Button onClick={props.addToFavorite} disabled={!isToAddFavourite ? false : true}>Add To Favorite</Button>
                         {isToAddFavourite ? <FavoriteIcon className={classes.icon} /> : null}
                     </Grid>

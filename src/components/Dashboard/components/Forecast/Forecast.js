@@ -34,7 +34,7 @@ function Forecast(props) {
                 <CardContent>
                     <Typography gutterBottom component="h2">
                         {props.data.map((property, index) => (
-                            <Typography key={property}>
+                            <Typography key={index}>
                                 <strong>{arrayHeadlines[index] + ":"}</strong>
                                 {isURL(property) ? <img src={property} width="75" height="45" key={index}></img> : <span key={index} className={classes.span}>{property}</span>}
                             </Typography>

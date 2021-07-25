@@ -5,7 +5,7 @@ import Display from './components/Display/Display';
 function Dashboard() {
     return (
         <Grid container >
-            <Grid item>
+            <Grid item xs>
                 <Display />
             </Grid>
         </Grid>

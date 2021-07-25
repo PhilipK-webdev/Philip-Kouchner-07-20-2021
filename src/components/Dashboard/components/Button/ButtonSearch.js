@@ -10,7 +10,7 @@ const useStyles = makeStyles({
 function ButtonSearch(props) {
     const classes = useStyles();
     return (
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
             <Grid item >
                 <Button variant="outlined" color="primary" size="large" onClick={props.submit} className={classes.btn} disabled={props.validString ? true : false}>
                     Submit
