@@ -28,8 +28,6 @@ function Forecast(props) {
             '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
         return pattern.test(str);
     }
-
-    console.log(props.data);
     return (
         <Card className={classes.root}>
             <CardActionArea>
@@ -38,7 +36,7 @@ function Forecast(props) {
                         {props.data.map((property, index) => (
                             <Typography key={property}>
                                 <strong>{arrayHeadlines[index] + ":"}</strong>
-                                {isURL(property) ? <img src={property} width="75" height="45"></img> : <span className={classes.span}>{property}</span>}
+                                {isURL(property) ? <img src={property} width="75" height="45" key={index}></img> : <span key={index} className={classes.span}>{property}</span>}
                             </Typography>
                         ))}
                     </Typography>

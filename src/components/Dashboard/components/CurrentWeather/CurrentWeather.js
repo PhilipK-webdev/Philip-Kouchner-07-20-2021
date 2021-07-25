@@ -66,7 +66,6 @@ function CurrentWeather(props) {
                         {isToAddFavourite ? <FavoriteIcon className={classes.icon} /> : null}
                     </Grid>
                 </Card>
-
             </Grid >
         )
     }

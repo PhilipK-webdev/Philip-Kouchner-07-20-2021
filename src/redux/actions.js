@@ -38,11 +38,3 @@ export const setIsFavouriteEmpty = data => {
     }
 
 }
-
-export const setIsToggle = data => {
-    return {
-        type: actions.IS_TOGGLE,
-        payload: data
-    }
-
-}

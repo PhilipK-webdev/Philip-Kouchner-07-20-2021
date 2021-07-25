@@ -1,22 +1,24 @@
-import { Grid } from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
 import { BrowserRouter as Router, Route, Switch as SwitchRouter, Redirect } from "react-router-dom";
 import NavigationBar from "./components/Navigation/NavigationBar";
 import { makeStyles } from '@material-ui/core/styles';
 import Main from "./components/Main";
 import Favourite from "./components/Favourite";
 import React, { useState } from 'react'
-import "./App.css"
+import "./App.css";
+
 const useStyles = makeStyles({
   rootNav: {
     backgroundColor: "#306F8C",
   },
   grey: {
     backgroundColor: "#e3e3e3",
-    height: "100vh",
+    height: "170vh",
+    overflowY: "hidden",
   },
   black: {
     backgroundColor: "black",
-    height: "100vh",
+    height: "170vh",
   }
 });
 
@@ -30,11 +32,11 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <div className={!checked ? classes.grey : classes.black}>
-        <Grid item xs={12}>
+    <div className="App" >
+      <Box className={!checked ? classes.grey : classes.black} >
+        <Grid item xs={12} >
           <Router>
-            <Grid container className={classes.rootNav} xs={12}>
+            <Grid container className={classes.rootNav} >
               <NavigationBar handleChange={handleChange} checked={checked} />
             </Grid>
             <SwitchRouter>
@@ -48,7 +50,7 @@ function App() {
             </SwitchRouter>
           </Router>
         </Grid>
-      </div>
+      </Box>
     </div>
   );
 }

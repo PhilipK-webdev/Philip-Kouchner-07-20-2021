@@ -5,7 +5,7 @@ import Dashboard from './Dashboard/Dashboard';
 function Main() {
 
     return (
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
             <Grid item>
                 <Dashboard />
             </Grid>

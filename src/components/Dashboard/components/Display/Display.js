@@ -12,6 +12,7 @@ import Forecast from '../Forecast/Forecast';
 import * as actions from '../../../../redux/actions';
 import { tempStringForecast, forecastWeather, currentWeather } from "./constants";
 import AutoSearch from "../AutoSearch/AutoSearch";
+import { IndeterminateCheckBox } from '@material-ui/icons';
 
 
 function Display() {
@@ -22,9 +23,6 @@ function Display() {
     const [validString, setIsValidString] = useState(true);
     const currentSearchCityRedux = useSelector(state => {
         return state.root.currentSearchCity;
-    });
-    const isToggle = useSelector(state => {
-        return state.root.isToggle;
     });
     const objCurrentWeatherRedux = useSelector(state => {
         return state.root.currentWeather;
@@ -254,15 +252,15 @@ function Display() {
             </Grid> */}
             {/* SearchBar new component */}
             <AutoSearch arrayCity={arrayCity} searchCity={searchCity} onKeyPress={onKeyPress} onSave={onSave} submit={submit} validString={validString} />
-            <Grid container xs={12} justifyContent="center">
+            <Grid container justifyContent="center">
                 <Grid item sx={12} sm={12}>
                     {<CurrentWeather objCurrentWeather={objCurrentWeatherRedux} addToFavorite={addToFavorite} />}
                 </Grid>
             </Grid>
-            <Grid container xs={12} justifyContent="center">
-                {renderForecastRedux != undefined ? renderForecastRedux.map(data => (
+            <Grid container justifyContent="center">
+                {renderForecastRedux != undefined ? renderForecastRedux.map((data, index) => (
                     <Grid item xs={4} sm={2} style={{ marginLeft: "1%" }}>
-                        <Forecast data={data} />
+                        <Forecast data={data} key={index} />
                     </Grid>
                 )) : null}
             </Grid>

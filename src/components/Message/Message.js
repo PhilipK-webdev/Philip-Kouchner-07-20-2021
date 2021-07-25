@@ -54,10 +54,7 @@ function Message() {
             </Button>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
-                    Please add to favourite.
-                    On the Main page you have a Button named:
-                    Add To Favourite
-                    Enjoy
+                    No Data to Display
                 </Alert>
             </Snackbar>
             <Alert severity="info" className={classes.message}>This is an information message! </Alert>
