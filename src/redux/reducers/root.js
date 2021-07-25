@@ -4,7 +4,9 @@ const initialState = {
     currentWeather: [],
     currentForecast: [],
     localStorageArrayCity: [],
-    currentSearchCity: ""
+    currentSearchCity: "",
+    isToAddFavourite: false,
+    isFavouriteEmpty: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -34,6 +36,20 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentSearchCity: action.payload
+            }
+            break;
+        }
+        case actions.IS_TO_ADD_FAVOURITE: {
+            return {
+                ...state,
+                isToAddFavourite: action.payload
+            }
+            break;
+        }
+        case actions.IS_FAVOURITE_EMPTY: {
+            return {
+                ...state,
+                isFavouriteEmpty: action.payload
             }
             break;
         }

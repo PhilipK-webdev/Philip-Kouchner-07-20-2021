@@ -25,3 +25,15 @@ export const setCityLocal = data => {
         payload: data
     }
 }
+export const setIsToAddFavourite = data => {
+    return {
+        type: actions.IS_TO_ADD_FAVOURITE,
+        payload: data
+    }
+}
+export const setIsFavouriteEmpty = data => {
+    return {
+        type: actions.IS_FAVOURITE_EMPTY,
+        payload: data
+    }
+}

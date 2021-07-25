@@ -18,7 +18,7 @@ function App() {
   return (
 
     <Provider store={store}>
-      <Grid container="fluid" xs={12} className="App" >
+      <Grid item xs={12} className="App" >
         <Router>
           <Grid container className={classes.rootNav} xs={12}>
             <NavigationBar />

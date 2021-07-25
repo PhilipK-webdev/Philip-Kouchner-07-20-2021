@@ -11,34 +11,14 @@ import CurrentWeather from '../CurrentWeather/CurrentWeather';
 import Forecast from '../Forecast/Forecast';
 import * as actions from '../../../../redux/actions';
 import { tempStringForecast, forecastWeather, currentWeather } from "./constants";
+import AutoSearch from "../AutoSearch/AutoSearch"
 
-function FieldSearch() {
+function Display() {
     const dispatch = useDispatch();
-    let apiKey = "";
-    let keySearchTemp = "";
-
-    // .env for front end
-    const getApiKey = (function () {
-        return {
-            privateMethodEncapsulated: function () {
-                apiKey = "Uk0bwbjCauPfqnSGqo4xvT3CNMBOTsGQ";
-                return apiKey;
-            }
-        }
-    })();
-
-    const getKeySearch = (function () {
-        return {
-            privateMethodEncapsulated: function () {
-                keySearchTemp = "215854";
-                return keySearchTemp;
-            }
-        }
-    })();
-
     const [arrayCity, setArrayCity] = useState([]);
     const [searchCity, setSearchCity] = useState("");
     const [keySearch, setKeySearch] = useState();
+    const [validString, setIsValidString] = useState(true);
     const currentSearchCityRedux = useSelector(state => {
         return state.root.currentSearchCity;
     });
@@ -64,67 +44,83 @@ function FieldSearch() {
     }, [])
 
     const defaultCity = () => {
-        // let tempURLToGetCurrentWeather = `http://dataservice.accuweather.com/currentconditions/v1/${getKeySearch.privateMethodEncapsulated()}?apikey=${getApiKey.privateMethodEncapsulated()}`;
-        // let tempURLToGetForesast = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${getKeySearch.privateMethodEncapsulated()}?apikey=${getApiKey.privateMethodEncapsulated()}`;
-        // const requestCurrent = axios.get(tempURLToGetCurrentWeather);
-        // const requestForecast = axios.get(tempURLToGetForesast);
-        // axios.all([requestCurrent, requestForecast]).then(axios.spread((...response) => {
+        let tempURLToGetCurrentWeather = `http://dataservice.accuweather.com/currentconditions/v1/${process.env.REACT_APP_ID_SEARCH}?apikey=${process.env.REACT_APP_KEY}`;
+        let tempURLToGetForesast = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${process.env.REACT_APP_ID_SEARCH}?apikey=${process.env.REACT_APP_KEY}`;
+        const requestCurrent = axios.get(tempURLToGetCurrentWeather);
+        const requestForecast = axios.get(tempURLToGetForesast);
+        axios.all([requestCurrent, requestForecast]).then(axios.spread((...response) => {
 
-        //     const resultOne = response[0];
-        //     const resultTwo = response[1];
-        //     if (resultOne.data[0].WeatherIcon < 10) {
-        //         resultOne.data[0].WeatherIcon = `0${resultOne.data[0].WeatherIcon}`;
-        //     }
-        //     let urlIcon = `https://developer.accuweather.com/sites/default/files/${resultOne.data[0].WeatherIcon}-s.png`;
-        //     let temp = [];
-        //     temp.push(resultOne.data[0].WeatherText);
-        //     temp.push(urlIcon);
-        //     temp.push(resultOne.data[0].Temperature.Metric.Value + resultOne.data[0].Temperature.Metric.Unit);
-        //     temp.push("Tel Aviv");
-        //     // 
-        //     dispatch(actions.setCurrentWeather([...temp]));
-        //     const result = resultTwo.data.DailyForecasts.map((data) => {
-        //         return {
-        //             IconTheme: `https://developer.accuweather.com/sites/default/files/${data.Night.Icon < 10 ? '0' + data.Night.Icon : data.Night.Icon}-s.png`,
-        //             date: // date: moment.utc(data.Date).format('MMMM Do YYYY'),,
-        //             temptureMin: data.Temperature.Minimum.Value + data.Temperature.Minimum.Unit,
-        //             temptureMax: data.Temperature.Maximum.Value + " " + data.Temperature.Maximum.Unit,
-        //         };
-        //     });
-
-        //     let newArrayForecast = [];
-        //     for (let i = 0; i < 5; i++) {
-        //         newArrayForecast[i] = (Object.values(result[i]));
-        //     }
-        //     dispatch(actions.setCurrentForecast([...newArrayForecast]))
-        // })).catch(err => console.log(err));
-        if (currentWeather[0].WeatherIcon < 10) {
-            currentWeather[0].WeatherIcon = `0${currentWeather[0].WeatherIcon}`;
-        }
-        let urlIcon = `https://developer.accuweather.com/sites/default/files/${currentWeather[0].WeatherIcon}-s.png`;
-        let temp = [];
-        temp.push(currentWeather[0].WeatherText);
-        temp.push(urlIcon);
-        temp.push(currentWeather[0].Temperature.Metric.Value + currentWeather[0].Temperature.Metric.Unit);
-        temp.push("Tel Aviv")
-        dispatch(actions.setCurrentWeather([...temp]));
+            const resultCurrentWeather = response[0];
+            const resultForecast = response[1];
+            if (resultCurrentWeather.data[0].WeatherIcon < 10) {
+                resultCurrentWeather.data[0].WeatherIcon = `0${resultCurrentWeather.data[0].WeatherIcon}`;
+            }
+            let urlIcon = `https://developer.accuweather.com/sites/default/files/${resultCurrentWeather.data[0].WeatherIcon}-s.png`;
+            let temp = [];
+            temp.push(resultCurrentWeather.data[0].WeatherText);
+            temp.push(urlIcon);
+            temp.push(resultCurrentWeather.data[0].Temperature.Metric.Value + resultCurrentWeather.data[0].Temperature.Metric.Unit);
+            temp.push("Tel Aviv");
+            dispatch(actions.setCurrentWeather([...temp]));
+            const result = resultForecast.data.DailyForecasts.map((data) => {
+                console.log(data.Night.Icon);
+                return {
+                    IconTheme: `https://developer.accuweather.com/sites/default/files/${data.Night.Icon < 10 ? '0' + data.Night.Icon : data.Night.Icon}-s.png`,
+                    date: moment.utc(data.Date).format('MMMM Do YYYY'),
+                    temptureMin: data.Temperature.Minimum.Value + data.Temperature.Minimum.Unit,
+                    temptureMax: data.Temperature.Maximum.Value + " " + data.Temperature.Maximum.Unit,
+                };
+            });
+            let newArrayForecast = [];
+            for (let i = 0; i < 5; i++) {
+                newArrayForecast[i] = (Object.values(result[i]));
+            }
+            dispatch(actions.setCurrentForecast([...newArrayForecast]))
+        })).catch(err => console.log(err));
+        // if (currentWeather[0].WeatherIcon < 10) {
+        //     currentWeather[0].WeatherIcon = `0${currentWeather[0].WeatherIcon}`;
+        // }
+        // let urlIcon = `https://developer.accuweather.com/sites/default/files/${currentWeather[0].WeatherIcon}-s.png`;
+        // let temp = [];
+        // temp.push(currentWeather[0].WeatherText);
+        // temp.push(urlIcon);
+        // temp.push(currentWeather[0].Temperature.Metric.Value + currentWeather[0].Temperature.Metric.Unit);
+        // temp.push("Tel Aviv")
+        // dispatch(actions.setCurrentWeather([...temp]));
 
     }
     const onKeyPress = (e) => {
         setSearchCity(e.target.value);
         const userChoice = e.target.value;
+        setIsValidString(true);
         if (userChoice.length > 1) {
-            userGetCity(userChoice).then(res => {
-                let arrayCity = [];
-                setKeySearch(res.data[0].Key);
-                const convert = convertObjCityToArr(res);
-                arrayCity = [...convert];
-                setArrayCity([...arrayCity]);
-            }).catch(err => console.log(err));
+            const isValid = isValidInput(userChoice);
+            if (isValid) {
+                setIsValidString(false);
+                // userGetCity(userChoice).then(res => {
+                //     let arrayCity = [];
+                //     setKeySearch(res.data[0].Key);
+                //     const convert = convertObjCityToArr(res);
+                //     arrayCity = [...convert];
+                //     setArrayCity([...arrayCity]);
+                // }).catch(err => console.log(err));
+            } else {
+                setIsValidString(true);
+            }
         }
     };
+
+    const isValidInput = (inputUser) => {
+        var pattern = new RegExp(/^[a-zA-Z0-9- ]*$/);
+        var hasNumber = /\d/;
+        if (inputUser === "" || hasNumber.test(inputUser) || !pattern.test(inputUser)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     const userGetCity = async (userChoice) => {
-        const url = `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${getApiKey.privateMethodEncapsulated()}&q=${userChoice}`;
+        const url = `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${process.env.REACT_APP_KEY}&q=${userChoice}`;
         const response = await axios(url);
         return response;
     }
@@ -140,13 +136,13 @@ function FieldSearch() {
         return tempArrOfNameCity;
     }
     const getCurrentWeather = async (keySearch) => {
-        const url = `http://dataservice.accuweather.com/currentconditions/v1/${keySearch}?apikey=${getApiKey.privateMethodEncapsulated()}`;
+        const url = `http://dataservice.accuweather.com/currentconditions/v1/${keySearch}?apikey=${process.env.REACT_APP_KEY}`;
         const responseCurrentWeather = await axios(url);
         return responseCurrentWeather;
     }
 
     const getForecast = async (keySearch) => {
-        const url = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${keySearch}?apikey=${getApiKey.privateMethodEncapsulated()}`;
+        const url = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${keySearch}?apikey=${process.env.REACT_APP_KEY}`;
         const responseForecast = await axios(url);
         return responseForecast;
     }
@@ -221,18 +217,18 @@ function FieldSearch() {
         let arr = [];
         arr.push({
             ID: keySearch,
-            name: currentSearchCityRedux,
+            name: currentSearchCityRedux ? currentSearchCityRedux : objCurrentWeatherRedux[3],
             weather: objCurrentWeatherRedux[0],
             tempture: objCurrentWeatherRedux[2]
         });
         dispatch(actions.setCityLocal([...arr]));
+        dispatch(actions.setIsToAddFavourite(true));
         window.localStorage.setItem("city", JSON.stringify([...arr]));
-
     }
     return (
         <Grid container xs={12}>
             {/* SearchBar new component */}
-            <Grid container xs={12}>
+            {/* <Grid container xs={12}>
                 <Grid container xs={12} sm={10}>
                     <FormControl variant="outlined" style={{ width: "80%" }}>
                         <Autocomplete
@@ -250,9 +246,10 @@ function FieldSearch() {
                 <Grid item style={{ marginTop: "25px" }} xs sm={2}  >
                     <ButtonSearch submit={submit} />
                 </Grid>
-            </Grid>
+            </Grid> */}
             {/* SearchBar new component */}
-            <Grid container xs={12} justify="center">
+            <AutoSearch arrayCity={arrayCity} searchCity={searchCity} onKeyPress={onKeyPress} onSave={onSave} submit={submit} validString={validString} />
+            <Grid container xs={12} justifyContent="center">
                 <Grid item sx={12} sm={12}>
                     {<CurrentWeather objCurrentWeather={objCurrentWeatherRedux} addToFavorite={addToFavorite} />}
                 </Grid>
@@ -268,7 +265,7 @@ function FieldSearch() {
     )
 }
 
-export default FieldSearch
+export default Display
 
 
 

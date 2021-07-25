@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Typography from '@material-ui/core/Typography';
+import { useDispatch, useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
     root: {
@@ -20,12 +21,20 @@ const useStyles = makeStyles({
     },
     link: {
         textDecoration: "none"
+    },
+    icon: {
+        marginRight: "5%",
+        marginTop: "2%",
+        color: "#ffee58"
     }
 
 });
 
 function CurrentWeather(props) {
     const classes = useStyles();
+    const isToAddFavourite = useSelector(state => {
+        return state.root.isToAddFavourite;
+    });
     if (props.objCurrentWeather !== undefined) {
         return (
             <Grid item xs={12} sm={6}>
@@ -53,19 +62,11 @@ function CurrentWeather(props) {
                         </CardContent>
                     </CardActionArea>
                     <Grid item style={{ display: "flex", justifyContent: "space-between" }}>
-                        <Button onClick={props.addToFavorite} >Add To Favorite</Button>
-                        {<FavoriteIcon style={{ marginRight: "5%", marginTop: "2%", color: "rgb(153,153,0)" }} />}
+                        <Button onClick={props.addToFavorite} disabled={!isToAddFavourite ? false : true}>Add To Favorite</Button>
+                        {isToAddFavourite ? <FavoriteIcon className={classes.icon} /> : null}
                     </Grid>
                 </Card>
             </Grid >
-        )
-    } else {
-        return (
-            <div>
-                <Typography>
-                    Loading ...
-                </Typography>
-            </div>
         )
     }
 }

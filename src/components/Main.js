@@ -1,13 +1,13 @@
 import { Grid } from '@material-ui/core'
 import React from 'react'
-import SearchBar from './SearchBar/SearchBar'
+import Dashboard from './Dashboard/Dashboard';
 
 function Main() {
 
     return (
         <Grid container justify="center">
             <Grid item>
-                <SearchBar />
+                <Dashboard />
             </Grid>
         </Grid>
     )

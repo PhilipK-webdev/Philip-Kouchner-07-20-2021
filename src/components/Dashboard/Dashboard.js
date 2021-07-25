@@ -1,15 +1,15 @@
 import { Grid } from '@material-ui/core'
 import React from 'react'
-import FieldSearch from './components/Field/FieldSearch'
+import Display from './components/Display/Display';
 
-function SearchBar() {
+function Dashboard() {
     return (
         <Grid container >
             <Grid item>
-                <FieldSearch />
+                <Display />
             </Grid>
         </Grid>
     )
 }
 
-export default SearchBar
+export default Dashboard

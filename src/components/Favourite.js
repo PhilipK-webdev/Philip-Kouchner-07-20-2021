@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import FavouriteCity from './SearchBar/components/FavouriteCity/FavouriteCity';
+import FavouriteCity from './Dashboard/components/FavouriteCity/FavouriteCity';
 import { Grid, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../redux/actions';
@@ -11,23 +11,28 @@ function Favourite() {
         return state.root.localStorageArrayCity;
     });
 
+    const isFavouriteEmpty = useSelector(state => {
+        return state.root.isFavouriteEmpty;
+    });
+
     useEffect(() => {
         if (localStorage.length > 0) {
             setIsLocalStorage(true);
             dispatch(actions.setCityLocal(JSON.parse(window.localStorage.getItem("city"))));
+            dispatch(actions.setIsFavouriteEmpty(true));
         }
     }, [])
 
     return (
-        <Grid container={true}>
-            <Grid container={true} justifyContent="center" style={{ marginTop: "2%" }}>
+        <Grid container>
+            <Grid container justifyContent="center" style={{ marginTop: "2%" }}>
                 <Grid item >
                     <Typography variant="h4" color="primary">
                         Welcome to Favourite Page
                     </Typography>
                 </Grid>
             </Grid>
-            {isLocalStorage ? localStorageArrayCity.map((objLocal, index) => (
+            {isFavouriteEmpty ? localStorageArrayCity.map((objLocal, index) => (
                 <Grid item xs={4} sm={6} style={{ marginTop: "5%", justifyContent: "none", display: "flex" }}>
                     <FavouriteCity objLocal={objLocal} index={index} /> </Grid>
             )) : <Grid container style={{ justifyContent: "center", }}>
