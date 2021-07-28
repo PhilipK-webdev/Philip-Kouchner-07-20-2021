@@ -88,7 +88,7 @@ function Display() {
         }
     }
     const userGetCity = async (userChoice) => {
-        const url = `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${REACT_APP_KEY}&q=${userChoice}`;
+        const url = `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${REACT_APP_KEY}&q=${userChoice}`;
         const response = await axios(url);
         return response;
     }
