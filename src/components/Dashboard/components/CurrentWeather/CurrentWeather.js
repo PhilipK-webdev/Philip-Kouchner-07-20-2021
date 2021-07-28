@@ -38,10 +38,10 @@ function CurrentWeather(props) {
     const isToAddFavourite = useSelector(state => {
         return state.root.isToAddFavourite;
     });
+
     if (props.objCurrentWeather !== undefined) {
         return (
             <Grid item xs={12} sm={6}>
-
                 <Card className={classes.root} >
                     <CardActionArea>
                         {props.objCurrentWeather[1] ? (
@@ -72,8 +72,8 @@ function CurrentWeather(props) {
                         </CardContent>
                     </CardActionArea>
                     <Grid item className={classes.divBtn}>
-                        <Button onClick={props.addToFavorite} disabled={!isToAddFavourite ? false : true}>Add To Favorite</Button>
                         {isToAddFavourite ? <FavoriteIcon className={classes.icon} /> : null}
+                        <Button onClick={props.addToFavorite} >Add To Favorite</Button>
                     </Grid>
                 </Card>
             </Grid >

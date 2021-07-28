@@ -11,10 +11,8 @@ import * as actions from '../../../../redux/actions';
 import styles from "./Styles/mystyle.module.css";
 const useStyles = makeStyles({
     root: {
-        maxWidth: 320,
-        marginLeft: "13.5%",
+        width: "fit-content",
         marginTop: "10%",
-
     },
     link: {
         textDecoration: "none"
@@ -46,21 +44,18 @@ function FavouriteCity(props) {
         const idToDelete = parseInt(e.target.attributes.getNamedItem("data-id").value);
         let arrTemp = JSON.parse(window.localStorage.getItem("city"));
         arrTemp.splice(idToDelete, 1);
-        localStorage.clear();
         window.localStorage.setItem("city", JSON.stringify(arrTemp));
         dispatch(actions.setCityLocal([...arrTemp]));
-        dispatch(actions.setIsToAddFavourite(false));
-        dispatch(actions.setIsFavouriteEmpty(false));
-
     }
-
     const setCity = () => {
         dispatch(actions.setCurrentSearchCity(props.objLocal.name));
+        dispatch(actions.setKeySearch(props.objLocal.ID));
+        dispatch(actions.setIsToAddFavourite(false));
     }
-
     return (
+
         <Grid item xs={12} sm={6}>
-            <Card className={classes.root}>
+            <Card className={classes.root}  >
                 <CardActionArea>
                     <CardContent >
                         <Typography gutterBottom className={classes.headline} >
@@ -83,13 +78,13 @@ function FavouriteCity(props) {
                     </CardContent>
                 </CardActionArea>
                 <Grid item className={classes.btnsGrid}>
-                    <button onClick={deleteCity} data-id={props.index} className={styles.button4}>Delete</button>
+                    <button onClick={deleteCity} className={styles.button4} data-id={props.index}>Delete</button>
                     <Link to="/" className={classes.link} >
                         <button onClick={setCity} className={styles.button5}>Main Page</button>
                     </Link>
                 </Grid>
             </Card>
-        </Grid >
+        </Grid>
     )
 }
 

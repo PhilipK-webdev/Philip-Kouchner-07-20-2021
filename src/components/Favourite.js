@@ -3,7 +3,6 @@ import FavouriteCity from './Dashboard/components/FavouriteCity/FavouriteCity';
 import { Grid, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../redux/actions';
-import Message from './Message/Message';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -13,7 +12,7 @@ const useStyles = makeStyles({
     title: {
         color: "#306F8C",
         fontFamily: 'Raleway',
-        fontSize: "58px",
+        fontSize: "35px",
         fontFeight: "800",
         lineHeight: "72px",
         margin: "0 0 24px",
@@ -21,8 +20,9 @@ const useStyles = makeStyles({
     },
     div: {
         marginTop: "5%",
-        justifyContent: "none",
-        display: "flex"
+        display: "flex",
+        marginRight: "13%",
+        marginLeft: "2%",
     },
     messageContainer: {
         justifyContent: "center"
@@ -35,43 +35,30 @@ const useStyles = makeStyles({
 function Favourite() {
 
     const classes = useStyles();
-    const [isLocalStorage, setIsLocalStorage] = useState(false);
     const localStorageArrayCity = useSelector(state => {
         return state.root.localStorageArrayCity;
     });
-
-    const isFavouriteEmpty = useSelector(state => {
-        return state.root.isFavouriteEmpty;
-    });
     const dispatch = useDispatch();
     useEffect(() => {
-
         if (localStorage.length > 0) {
-            setIsLocalStorage(true);
-            dispatch(actions.setCityLocal(JSON.parse(window.localStorage.getItem("city"))));
-            dispatch(actions.setIsFavouriteEmpty(true));
+            let tempCity = JSON.parse(window.localStorage.getItem("city"));
+            dispatch(actions.setCityLocal([...tempCity]));
         }
-    }, [])
 
+    }, [])
     return (
         <Grid container>
             <Grid container justifyContent="center" className={classes.root}>
                 <Grid item >
-                    <Typography variant="h4" color="primary" className={classes.title}>
+                    <Typography variant="h6" color="primary" className={classes.title}>
                         Welcome to Favourite Page
                     </Typography>
                 </Grid>
             </Grid>
-            {isFavouriteEmpty ? localStorageArrayCity.map((objLocal, index) => (
-                <Grid item xs={4} sm={6} className={classes.div}>
-                    <FavouriteCity objLocal={objLocal} index={index} /> </Grid>
-            )) : <Grid container className={classes.messageContainer}>
-                <Grid item className={classes.message} sx={12} sm={6}>
-                    <Typography>
-                        <Message />
-                    </Typography>
-                </Grid>
-            </Grid>}
+            {localStorageArrayCity.map((objLocal, index) => (
+                <Grid item xs={4} sm={3} className={classes.div}>
+                    <FavouriteCity objLocal={objLocal} index={index} style={{ marginLeft: "14%", }} /> </Grid>
+            ))}
         </Grid>
     )
 }

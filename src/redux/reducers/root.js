@@ -6,7 +6,7 @@ const initialState = {
     localStorageArrayCity: [],
     currentSearchCity: "",
     isToAddFavourite: false,
-    isFavouriteEmpty: false,
+    setKeySearch: "",
 };
 
 const reducer = (state = initialState, action) => {
@@ -46,10 +46,10 @@ const reducer = (state = initialState, action) => {
             }
 
         }
-        case actions.IS_FAVOURITE_EMPTY: {
+        case actions.SET_KEY_SEARCH: {
             return {
                 ...state,
-                isFavouriteEmpty: action.payload
+                setKeySearch: action.payload
             }
 
         }

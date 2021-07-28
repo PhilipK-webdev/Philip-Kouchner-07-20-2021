@@ -32,9 +32,9 @@ export const setIsToAddFavourite = data => {
         payload: data
     }
 }
-export const setIsFavouriteEmpty = data => {
+export const setKeySearch = data => {
     return {
-        type: actions.IS_FAVOURITE_EMPTY,
+        type: actions.SET_KEY_SEARCH,
         payload: data
     }
 

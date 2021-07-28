@@ -7,7 +7,7 @@ import { CardContent } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
-        height: "85%",
+        height: "90%",
         marginTop: "5%",
 
     },
@@ -28,7 +28,6 @@ function Forecast(props) {
                         {props.data.map((property, index) => (
                             <Typography key={index}>
                                 <strong>{arrayHeadlines[index] + ":"}</strong>
-                                {console.log(property)}
                                 {index == 0 ? <img src={property} width="75" height="45" key={index}></img> : <span key={index} className={classes.span}>{property}</span>}
                             </Typography>
                         ))}
