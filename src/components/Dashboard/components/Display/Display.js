@@ -115,8 +115,8 @@ function Display() {
 
         }
         dispatch(actions.setCurrentSearchCity(stringSearchCity));
-        const urlCurrent = `http://dataservice.accuweather.com/currentconditions/v1/${userKeySearch === "" ? REACT_APP_ID_SEARCH : parseInt(userKeySearch)}?apikey=${REACT_APP_KEY}`;
-        const urlForecast = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${userKeySearch === "" ? REACT_APP_ID_SEARCH : parseInt(userKeySearch)}?apikey=${REACT_APP_KEY}`;
+        const urlCurrent = `https://dataservice.accuweather.com/currentconditions/v1/${userKeySearch === "" ? REACT_APP_ID_SEARCH : parseInt(userKeySearch)}?apikey=${REACT_APP_KEY}`;
+        const urlForecast = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${userKeySearch === "" ? REACT_APP_ID_SEARCH : parseInt(userKeySearch)}?apikey=${REACT_APP_KEY}`;
         const currentWeather = axios.get(urlCurrent);
         const forecast = axios.get(urlForecast);
         getAllData(currentWeather, forecast, stringSearchCity)
