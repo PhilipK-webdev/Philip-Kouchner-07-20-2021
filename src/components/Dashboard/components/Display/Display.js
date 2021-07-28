@@ -48,8 +48,8 @@ function Display() {
     }, [])
 
     const defaultCity = () => {
-        let tempURLToGetCurrentWeather = `http://dataservice.accuweather.com/currentconditions/v1/${REACT_APP_ID_SEARCH}?apikey=${REACT_APP_KEY}`;
-        let tempURLToGetForesast = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${REACT_APP_ID_SEARCH}?apikey=${REACT_APP_KEY}`;
+        let tempURLToGetCurrentWeather = `https://dataservice.accuweather.com/currentconditions/v1/${REACT_APP_ID_SEARCH}?apikey=${REACT_APP_KEY}`;
+        let tempURLToGetForesast = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${REACT_APP_ID_SEARCH}?apikey=${REACT_APP_KEY}`;
         const requestCurrent = axios.get(tempURLToGetCurrentWeather);
         const requestForecast = axios.get(tempURLToGetForesast);
         let stringDefacultCity = "Tel Aviv";
