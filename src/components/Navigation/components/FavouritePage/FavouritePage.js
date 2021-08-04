@@ -12,13 +12,16 @@ const useStyles = makeStyles({
         fontSize: "20px",
         color: "white"
     },
+    div: {
+        marginBottom: "50%"
+    }
 
 });
 function FavouritePage() {
     const classes = useStyles();
     return (
         <Link to="/favorite" className={classes.link}>
-            <Grid item>
+            <Grid item className={classes.div}>
                 <Typography className={classes.title} >
                     Favorite
                 </Typography>

@@ -3,4 +3,6 @@ body{
   margin: 0;
   padding: 0;
   background-color: "#e3e3e3";
+  max-width: 100%;
+  overflow-x: hidden;
 }

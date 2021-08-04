@@ -10,14 +10,16 @@ import "./App.css";
 const useStyles = makeStyles({
   rootNav: {
     backgroundColor: "#306F8C",
+    display: "block",
+    width: "15%"
   },
   grey: {
     backgroundColor: "#e3e3e3",
-    height: "110vh",
+
   },
   black: {
     backgroundColor: "black",
-    height: "110vh",
+
   }
 });
 
@@ -33,7 +35,7 @@ function App() {
   return (
     <div className="App" >
       <div className={!checked ? classes.grey : classes.black} >
-        <Grid item xs={12} >
+        <Grid item xs={12} style={{ display: "flex" }} >
           <Router>
             <Grid container className={classes.rootNav} >
               <NavigationBar handleChange={handleChange} checked={checked} />

@@ -11,13 +11,16 @@ const useStyles = makeStyles({
         fontSize: "20px",
         color: "white"
     },
+    div: {
+        marginBottom: "50%"
+    }
 
 });
 function MainPage() {
     const classes = useStyles();
     return (
         <Link to="/" className={classes.link}>
-            <Grid item>
+            <Grid item className={classes.div}>
                 <Typography className={classes.title}>
                     Main
                 </Typography>

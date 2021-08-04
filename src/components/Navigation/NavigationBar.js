@@ -9,22 +9,26 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 const useStyles = makeStyles({
     root: {
-        justifyContent: "flex-end",
-        flexWrap: "initial !important"
+        display: "block",
+        position: "absolute",
+        top: "25%",
+        marginLeft: "5px",
+        width: "fit-content"
     },
     item: {
-        marginRight: "10px",
-        marginTop: "5px"
+        marginTop: "10px"
     },
     title: {
         fontSize: "25px",
         marginLeft: "10px",
         display: "flex",
-        color: "white"
+        color: "white",
+        paddingTop: "5%"
     },
     mainRoot: {
         flexWrap: "initial",
-        marginTop: "10px",
+        display: "block",
+        height: "100vh"
     },
     toggle: {
         marginTop: "0.3%",
@@ -46,15 +50,15 @@ function NavigationBar(props) {
                 <Grid item className={classes.item}>
                     <MainPage />
                 </Grid>
-
                 <Grid item className={classes.item}>
                     <FavouritePage />
                 </Grid>
                 <Grid item className={classes.toggle}>
                     <FormGroup>
                         <FormControlLabel
-                            control={<Switch checked={props.checked} onChange={props.handleChange} />}
                             label="Toggle"
+                            control={<Switch checked={props.checked} onChange={props.handleChange} />}
+                            style={{ fontSize: "20px" }}
                         />
                     </FormGroup>
                 </Grid>
