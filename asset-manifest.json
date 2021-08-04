@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/Philip-Kouchner-07-20-2021/static/css/main.f63fd6f9.chunk.css",
-    "main.js": "/Philip-Kouchner-07-20-2021/static/js/main.6bdb493c.chunk.js",
-    "main.js.map": "/Philip-Kouchner-07-20-2021/static/js/main.6bdb493c.chunk.js.map",
+    "main.css": "/Philip-Kouchner-07-20-2021/static/css/main.a8aee003.chunk.css",
+    "main.js": "/Philip-Kouchner-07-20-2021/static/js/main.f5b29e6b.chunk.js",
+    "main.js.map": "/Philip-Kouchner-07-20-2021/static/js/main.f5b29e6b.chunk.js.map",
     "runtime-main.js": "/Philip-Kouchner-07-20-2021/static/js/runtime-main.812dd68f.js",
     "runtime-main.js.map": "/Philip-Kouchner-07-20-2021/static/js/runtime-main.812dd68f.js.map",
     "static/js/2.79e48bfb.chunk.js": "/Philip-Kouchner-07-20-2021/static/js/2.79e48bfb.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.e2a852ed.chunk.js": "/Philip-Kouchner-07-20-2021/static/js/3.e2a852ed.chunk.js",
     "static/js/3.e2a852ed.chunk.js.map": "/Philip-Kouchner-07-20-2021/static/js/3.e2a852ed.chunk.js.map",
     "index.html": "/Philip-Kouchner-07-20-2021/index.html",
-    "static/css/main.f63fd6f9.chunk.css.map": "/Philip-Kouchner-07-20-2021/static/css/main.f63fd6f9.chunk.css.map",
+    "static/css/main.a8aee003.chunk.css.map": "/Philip-Kouchner-07-20-2021/static/css/main.a8aee003.chunk.css.map",
     "static/js/2.79e48bfb.chunk.js.LICENSE.txt": "/Philip-Kouchner-07-20-2021/static/js/2.79e48bfb.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.812dd68f.js",
     "static/js/2.79e48bfb.chunk.js",
-    "static/css/main.f63fd6f9.chunk.css",
-    "static/js/main.6bdb493c.chunk.js"
+    "static/css/main.a8aee003.chunk.css",
+    "static/js/main.f5b29e6b.chunk.js"
   ]
 }
