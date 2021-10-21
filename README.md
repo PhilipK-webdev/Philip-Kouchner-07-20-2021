@@ -38,4 +38,4 @@ Visual Studio Code
 ## Authors
 
 - Philip Kouchner
-- Github link-https://philipk-webdev.github.io/Philip-Kouchner-07-20-2021/
+- Github link-https://philipk-webdev.github.io/WeatherApp/
